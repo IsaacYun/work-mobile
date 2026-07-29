@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORK MOBILE — Landing Page Versions</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard Variable',Pretendard,sans-serif;background:#111;color:#fff;min-height:100vh;display:grid;place-items:center}
+.inner{text-align:center;padding:40px 24px}
+h1{font-size:clamp(28px,4vw,42px);font-weight:900;letter-spacing:-.03em;margin-bottom:8px}
+h1 span{color:#00C471}
+.sub{font-size:15px;color:rgba(255,255,255,.5);margin-bottom:48px}
+.versions{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.ver-card{display:flex;flex-direction:column;align-items:center;gap:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:36px 40px;text-decoration:none;color:#fff;transition:all .3s cubic-bezier(.22,.7,.3,1);min-width:180px}
+.ver-card:hover{background:rgba(0,196,113,.08);border-color:rgba(0,196,113,.4);transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,196,113,.15)}
+.ver-card .no{font-size:48px;font-weight:900;color:rgba(255,255,255,.15);font-family:Inter,monospace;transition:color .3s}
+.ver-card:hover .no{color:#00C471}
+.ver-card b{font-size:17px;font-weight:700}
+.ver-card small{font-size:12px;color:rgba(255,255,255,.4);line-height:1.5}
+.foot{margin-top:48px;font-size:12px;color:rgba(255,255,255,.25)}
+</style>
+</head>
+<body>
+<div class="inner">
+  <h1>WORK MOBILE <span>by Mobit</span></h1>
+  <p class="sub">랜딩페이지 버전 아카이브</p>
+  <div class="versions">
+    <a class="ver-card" href="v1/">
+      <span class="no">v1</span>
+      <b>챌린저스 스타일</b>
+      <small>다크 필 GNB · 블루 액센트<br>원페이지 스크롤 · 폼 포함</small>
+    </a>
+    <a class="ver-card" href="v2/">
+      <span class="no">v2</span>
+      <b>챌린저스 톤 정제</b>
+      <small>672px 컬럼 · 인터랙티브 BG<br>고객 목소리 · 가치제안</small>
+    </a>
+    <a class="ver-card" href="v3/">
+      <span class="no">v3</span>
+      <b>뮤즈바이 스타일</b>
+      <small>화이트 데이터 드리븐<br>실시간 카운터 · 5-STEP · 3-tier</small>
+    </a>
+  </div>
+  <p class="foot">© 2026 Mobit Inc.</p>
+</div>
+</body>
+</html>

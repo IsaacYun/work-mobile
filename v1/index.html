@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORK MOBILE — 업무용 회선을 이메일 계정처럼 | Mobit</title>
+<meta name="description" content="개통·배정·정산·회수를 몇 분 안에. 직원 개인폰에 흩어진 업무 번호를 회사 자산으로 만드는 기업용 회선 관리 인프라. 파일럿 프로그램 신청하기.">
+<meta property="og:title" content="WORK MOBILE — 업무용 회선을 이메일 계정처럼">
+<meta property="og:description" content="eSIM 기반 원격 발급부터 퇴사자 번호 회수까지. 기업의 모든 모바일 회선을 소프트웨어로 운영하세요.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A1B26'/%3E%3Crect x='7' y='17' width='4' height='8' rx='1' fill='%230FBF7F'/%3E%3Crect x='14' y='12' width='4' height='13' rx='1' fill='%230FBF7F'/%3E%3Crect x='21' y='7' width='4' height='18' rx='1' fill='%230FBF7F'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Orbit&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --paper:#F6F6F2;
+  --paper-2:#EDEDE6;
+  --ink:#0A1B26;
+  --ink-2:#0E2433;
+  --ink-3:#13303F;
+  --signal:#0FBF7F;
+  --signal-dim:rgba(15,191,127,.14);
+  --amber:#F5A623;
+  --txt:#0A1B26;
+  --txt-2:#3E5462;
+  --txt-3:#7A8E9A;
+  --line:rgba(10,27,38,.12);
+  --line-dark:rgba(246,246,242,.14);
+  --disp:'Space Grotesk','Pretendard Variable',Pretendard,sans-serif;
+  --body:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',sans-serif;
+  --tech:'Orbit','Space Grotesk',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  background:var(--paper);
+  color:var(--txt);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--signal);color:var(--ink)}
+/* 키보드 포커스 가시성 */
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:4px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+img{max-width:100%}
+
+/* ============ UTILITIES ============ */
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.label{
+  font-family:var(--tech);
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--signal);display:inline-flex;align-items:center;gap:10px;
+}
+.label::before{content:'';width:22px;height:1px;background:var(--signal)}
+.hl{
+  background:linear-gradient(transparent 62%,var(--signal-dim) 62%,var(--signal-dim) 94%,transparent 94%);
+  box-decoration-break:clone;-webkit-box-decoration-break:clone;
+}
+/* scroll reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.22,.7,.3,1),transform .7s cubic-bezier(.22,.7,.3,1)}
+.rv.on{opacity:1;transform:none}
+.rv[data-d="1"]{transition-delay:.08s}.rv[data-d="2"]{transition-delay:.16s}
+.rv[data-d="3"]{transition-delay:.24s}.rv[data-d="4"]{transition-delay:.32s}
+.rv[data-d="5"]{transition-delay:.4s}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-weight:600;font-size:15px;
+  padding:15px 28px;border-radius:8px;border:1.5px solid transparent;
+  transition:transform .22s cubic-bezier(.22,.7,.3,1),background .22s,color .22s,border-color .22s,box-shadow .22s;
+  white-space:nowrap;
+}
+.btn .arr{transition:transform .22s;font-family:var(--disp)}
+.btn:hover .arr{transform:translateX(5px)}
+.btn-solid{background:var(--ink);color:var(--paper)}
+.btn-solid:hover{background:var(--signal);color:var(--ink);transform:translateY(-2px);box-shadow:0 10px 26px rgba(15,191,127,.32)}
+.btn-ghost{border-color:var(--line);color:var(--txt);background:transparent}
+.btn-ghost:hover{border-color:var(--ink);transform:translateY(-2px)}
+.btn-signal{background:var(--signal);color:var(--ink)}
+.btn-signal:hover{background:var(--paper);transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+.btn-line-dark{border-color:var(--line-dark);color:var(--paper)}
+.btn-line-dark:hover{border-color:var(--signal);color:var(--signal);transform:translateY(-2px)}
+
+/* ============ GNB ============ */
+.gnb{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(246,246,242,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s,box-shadow .3s;
+}
+.gnb.scrolled{border-color:var(--line);box-shadow:0 4px 24px rgba(10,27,38,.06)}
+.gnb-in{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:baseline;gap:9px;font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:-.02em}
+.logo .sig{
+  display:inline-flex;gap:2.5px;align-items:flex-end;height:15px;
+}
+.logo .sig i{width:3.5px;background:var(--signal);border-radius:1px;animation:sig 1.5s ease-in-out infinite}
+.logo .sig i:nth-child(1){height:6px}.logo .sig i:nth-child(2){height:10px;animation-delay:.18s}
+.logo .sig i:nth-child(3){height:15px;animation-delay:.36s}
+@keyframes sig{0%,100%{opacity:.35}50%{opacity:1}}
+.logo small{font-family:var(--tech);font-size:10px;letter-spacing:.2em;color:var(--txt-3);font-weight:400}
+.nav{display:flex;align-items:center;gap:34px}
+.nav a.nl{font-size:14.5px;font-weight:500;color:var(--txt-2);transition:color .2s;position:relative}
+.nav a.nl::after{content:'';position:absolute;left:0;bottom:-5px;width:0;height:2px;background:var(--signal);transition:width .25s}
+.nav a.nl:hover{color:var(--txt)}
+.nav a.nl:hover::after{width:100%}
+.gnb-cta{display:flex;gap:10px}
+.gnb .btn{padding:10px 20px;font-size:14px}
+.burger{display:none;background:none;border:none;width:40px;height:40px;position:relative}
+.burger span{position:absolute;left:9px;right:9px;height:2px;background:var(--ink);transition:.3s}
+.burger span:nth-child(1){top:14px}.burger span:nth-child(2){top:20px}.burger span:nth-child(3){top:26px}
+.burger.open span:nth-child(1){top:20px;transform:rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){top:20px;transform:rotate(-45deg)}
+.m-nav{
+  display:none;position:fixed;top:68px;left:0;right:0;z-index:99;
+  background:var(--paper);border-bottom:1px solid var(--line);
+  padding:18px 28px 26px;flex-direction:column;gap:4px;
+  transform:translateY(-8px);opacity:0;pointer-events:none;transition:.3s;
+}
+.m-nav.open{transform:none;opacity:1;pointer-events:auto}
+.m-nav a{padding:13px 4px;font-size:16px;font-weight:500;border-bottom:1px solid var(--line)}
+.m-nav .btn{margin-top:16px;justify-content:center}
+
+/* ============ HERO ============ */
+.hero{
+  padding:158px 0 96px;position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 82% 12%,rgba(15,191,127,.09),transparent 42%),
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:auto,52px 52px,52px 52px;
+}
+.hero::after{ /* grid fade */
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(246,246,242,.4),transparent 30%,transparent 60%,var(--paper));
+}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative;z-index:2}
+.hero h1{
+  font-size:clamp(38px,5.4vw,66px);line-height:1.12;letter-spacing:-.035em;
+  font-weight:800;margin:22px 0 24px;
+}
+.hero h1 .disp{font-family:var(--disp)}
+.hero p.sub{font-size:clamp(16px,1.6vw,19px);color:var(--txt-2);max-width:520px;margin-bottom:38px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.hero-note{margin-top:26px;display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--txt-3)}
+.hero-note .dot{width:8px;height:8px;border-radius:50%;background:var(--signal);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(15,191,127,.5)}70%{box-shadow:0 0 0 9px rgba(15,191,127,0)}100%{box-shadow:0 0 0 0 rgba(15,191,127,0)}}
+
+/* console */
+.console{
+  background:var(--ink);border-radius:14px;overflow:hidden;
+  box-shadow:0 30px 70px rgba(10,27,38,.28),0 2px 0 rgba(255,255,255,.06) inset;
+  border:1px solid rgba(255,255,255,.07);
+  transform:rotate(.6deg);
+  transition:transform .5s cubic-bezier(.22,.7,.3,1);
+}
+.console:hover{transform:rotate(0) translateY(-4px)}
+.con-head{
+  display:flex;align-items:center;gap:12px;padding:14px 20px;
+  border-bottom:1px solid var(--line-dark);background:var(--ink-2);
+}
+.con-head .dots{display:flex;gap:6px}
+.con-head .dots i{width:10px;height:10px;border-radius:50%;background:rgba(246,246,242,.16)}
+.con-head .dots i:first-child{background:#FF6159}
+.con-head .ttl{font-family:var(--tech);font-size:11px;letter-spacing:.24em;color:rgba(246,246,242,.55)}
+.con-head .live{
+  margin-left:auto;font-family:var(--tech);font-size:10px;letter-spacing:.18em;color:var(--signal);
+  display:flex;align-items:center;gap:6px;
+}
+.con-head .live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--signal);animation:pulse 1.6s infinite}
+.con-body{padding:20px;min-height:288px;display:flex;flex-direction:column;gap:11px;font-size:13.5px}
+.crow{
+  display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:8px;
+  background:rgba(246,246,242,.045);border:1px solid rgba(246,246,242,.06);
+  color:rgba(246,246,242,.85);
+  animation:rowIn .5s cubic-bezier(.22,.7,.3,1) both;
+}
+@keyframes rowIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.crow .ic{
+  width:26px;height:26px;border-radius:6px;flex:none;display:grid;place-items:center;
+  font-size:12px;font-family:var(--disp);font-weight:700;
+}
+.crow.req .ic{background:rgba(245,166,35,.16);color:var(--amber)}
+.crow.prog .ic{background:rgba(15,191,127,.14);color:var(--signal)}
+.crow.done .ic{background:rgba(15,191,127,.2);color:var(--signal)}
+.crow.recall .ic{background:rgba(96,165,250,.16);color:#7CB2F5}
+.crow.bill .ic{background:rgba(246,246,242,.1);color:rgba(246,246,242,.8)}
+.crow .tx{flex:1;min-width:0}
+.crow .tx b{font-weight:600;color:var(--paper)}
+.crow .tx small{display:block;color:rgba(246,246,242,.45);font-size:12px;margin-top:1px}
+.crow .bar{height:4px;border-radius:2px;background:rgba(246,246,242,.1);overflow:hidden;margin-top:7px}
+.crow .bar i{display:block;height:100%;width:0;background:var(--signal);border-radius:2px;transition:width 1.6s cubic-bezier(.4,0,.2,1)}
+.crow .st{font-family:var(--tech);font-size:10px;letter-spacing:.14em;flex:none}
+.crow.req .st{color:var(--amber)}
+.crow.done .st,.crow.prog .st{color:var(--signal)}
+.crow.recall .st{color:#7CB2F5}
+.crow.bill .st{color:rgba(246,246,242,.55)}
+.con-foot{
+  display:flex;gap:0;border-top:1px solid var(--line-dark);background:var(--ink-2);
+}
+.con-foot .cell{flex:1;padding:14px 18px;border-right:1px solid var(--line-dark)}
+.con-foot .cell:last-child{border-right:none}
+.con-foot .cell b{font-family:var(--disp);font-size:21px;font-weight:700;color:var(--paper);display:block;line-height:1.2}
+.con-foot .cell b em{font-style:normal;color:var(--signal)}
+.con-foot .cell span{font-size:11.5px;color:rgba(246,246,242,.45)}
+
+/* ============ TICKER ============ */
+.ticker{background:var(--ink);border-block:1px solid var(--ink);overflow:hidden;padding:17px 0}
+.tk-track{display:flex;gap:0;width:max-content;animation:tk 30s linear infinite}
+.ticker:hover .tk-track{animation-play-state:paused}
+@keyframes tk{to{transform:translateX(-50%)}}
+.tk-track span{
+  font-family:var(--tech);font-size:13px;letter-spacing:.2em;color:rgba(246,246,242,.6);
+  padding:0 30px;display:flex;align-items:center;gap:30px;white-space:nowrap;
+}
+.tk-track span::after{content:'';width:5px;height:5px;background:var(--signal);border-radius:1px;transform:rotate(45deg)}
+
+/* ============ SECTION COMMON ============ */
+section{position:relative}
+.sec-head{margin-bottom:58px}
+.sec-head h2{font-size:clamp(30px,3.6vw,46px);line-height:1.22;letter-spacing:-.03em;font-weight:800;margin-top:20px}
+.sec-head p{color:var(--txt-2);font-size:17px;max-width:600px;margin-top:16px}
+.dark .sec-head p{color:rgba(246,246,242,.62)}
+
+/* ============ PROBLEM ============ */
+.problem{
+  background:var(--ink);color:var(--paper);padding:110px 0 120px;overflow:hidden;
+}
+.problem::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 12% 88%,rgba(15,191,127,.08),transparent 40%),
+    linear-gradient(rgba(246,246,242,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(246,246,242,.035) 1px,transparent 1px);
+  background-size:auto,48px 48px,48px 48px;
+}
+.problem .wrap{position:relative}
+.problem h2 .dim{color:rgba(246,246,242,.42)}
+.ledger{border-top:1px solid var(--line-dark)}
+.lrow{
+  display:grid;grid-template-columns:86px 1fr 1.35fr;gap:28px;align-items:baseline;
+  padding:26px 10px;border-bottom:1px solid var(--line-dark);
+  transition:background .25s,padding-left .3s cubic-bezier(.22,.7,.3,1);
+}
+.lrow:hover{background:rgba(246,246,242,.04);padding-left:22px}
+.lrow .no{font-family:var(--disp);font-size:15px;font-weight:500;color:var(--amber)}
+.lrow h3{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.lrow p{color:rgba(246,246,242,.55);font-size:15px}
+.hidden-demand{
+  margin-top:54px;background:var(--ink-2);border:1px solid var(--line-dark);border-left:3px solid var(--signal);
+  border-radius:12px;padding:34px 38px;display:flex;gap:30px;align-items:center;flex-wrap:wrap;
+}
+.hidden-demand .big{font-family:var(--disp);font-size:clamp(30px,3.4vw,44px);font-weight:700;line-height:1.15;letter-spacing:-.02em}
+.hidden-demand .big em{font-style:normal;color:var(--signal)}
+.hidden-demand p{color:rgba(246,246,242,.6);font-size:15.5px;flex:1;min-width:260px}
+
+/* ============ LIFECYCLE ============ */
+.lifecycle{padding:116px 0 108px;background:var(--paper)}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-top:14px}
+.steps::before{
+  content:'';position:absolute;top:29px;left:6%;right:6%;height:2px;
+  background:repeating-linear-gradient(90deg,var(--ink) 0 7px,transparent 7px 14px);opacity:.22;
+}
+.step{position:relative;padding:0 16px;text-align:left}
+.step .n{
+  width:58px;height:58px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);
+  display:grid;place-items:center;font-family:var(--disp);font-weight:700;font-size:19px;
+  position:relative;z-index:2;transition:.3s cubic-bezier(.22,.7,.3,1);
+}
+.step:hover .n{background:var(--ink);color:var(--signal);transform:scale(1.1) rotate(-6deg)}
+.step h3{font-size:17.5px;font-weight:700;margin:20px 0 8px;letter-spacing:-.01em}
+.step h3 small{font-family:var(--tech);display:block;font-size:10px;letter-spacing:.2em;color:var(--signal);font-weight:400;margin-bottom:6px;text-transform:uppercase}
+.step p{font-size:14px;color:var(--txt-2)}
+.step .tag{
+  display:inline-block;margin-top:12px;font-family:var(--disp);font-size:12px;font-weight:700;
+  background:var(--signal-dim);color:#0A8F60;padding:4px 11px;border-radius:99px;
+}
+
+/* ============ BENTO ============ */
+.bento{padding:0 0 118px;background:var(--paper)}
+.b-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.b-card{
+  border:1px solid var(--line);border-radius:14px;background:#fff;
+  padding:34px 32px;position:relative;overflow:hidden;
+  transition:transform .3s cubic-bezier(.22,.7,.3,1),box-shadow .3s,border-color .3s;
+}
+.b-card:hover{transform:translateY(-5px);box-shadow:0 22px 48px rgba(10,27,38,.1);border-color:rgba(10,27,38,.28)}
+.b-card .k{font-family:var(--tech);font-size:11px;letter-spacing:.22em;color:var(--signal);text-transform:uppercase}
+.b-card h3{font-size:22px;font-weight:800;letter-spacing:-.02em;margin:14px 0 10px}
+.b-card p{font-size:15px;color:var(--txt-2)}
+.b-7{grid-column:span 7}.b-5{grid-column:span 5}.b-4{grid-column:span 4}
+/* mini dashboard mock */
+.mini-dash{margin-top:26px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper)}
+.md-head{display:flex;gap:0;border-bottom:1px solid var(--line);font-size:12px;font-weight:600;color:var(--txt-3)}
+.md-head span{flex:1;padding:9px 14px}
+.md-row{display:flex;align-items:center;font-size:13px;border-bottom:1px solid var(--line);transition:background .2s}
+.md-row:last-child{border-bottom:none}
+.md-row:hover{background:var(--signal-dim)}
+.md-row span{flex:1;padding:11px 14px}
+.md-row .who{font-weight:600}
+.md-row .st-on{color:#0A8F60;font-weight:700;font-size:12px}
+.md-row .st-off{color:var(--txt-3);font-size:12px}
+.md-row .cost{font-family:var(--disp);font-weight:500;text-align:right}
+/* esim qr mock */
+.esim-mock{margin-top:26px;display:flex;gap:20px;align-items:center}
+.qr{
+  width:96px;height:96px;flex:none;border-radius:10px;background:var(--ink);position:relative;
+  background-image:
+    repeating-linear-gradient(0deg,var(--paper) 0 6px,transparent 6px 12px),
+    repeating-linear-gradient(90deg,var(--paper) 0 6px,transparent 6px 12px);
+  background-size:60px 60px;background-position:center;background-repeat:no-repeat;
+  animation:qrGlow 2.6s ease-in-out infinite;
+}
+@keyframes qrGlow{0%,100%{box-shadow:0 0 0 0 rgba(15,191,127,0)}50%{box-shadow:0 0 0 8px rgba(15,191,127,.16)}}
+.esim-mock .flow{font-size:13.5px;color:var(--txt-2)}
+.esim-mock .flow b{display:block;color:var(--txt);font-size:15px;margin-bottom:4px}
+.esim-mock .flow .t{font-family:var(--disp);color:#0A8F60;font-weight:700}
+/* api mock */
+.api-mock{
+  margin-top:24px;background:var(--ink);border-radius:10px;padding:18px 20px;
+  font-family:'Space Grotesk',monospace;font-size:12.5px;line-height:1.85;color:rgba(246,246,242,.75);overflow-x:auto;
+}
+.api-mock .g{color:var(--signal)}.api-mock .a{color:var(--amber)}.api-mock .c{color:rgba(246,246,242,.35)}
+
+/* ============ NUMBERS ============ */
+.numbers{background:var(--paper-2);border-block:1px solid var(--line);padding:74px 0}
+.num-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:34px}
+.num{position:relative;padding-left:20px}
+.num::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:3px;background:var(--ink);transition:background .3s}
+.num:hover::before{background:var(--signal)}
+.num b{font-family:var(--disp);font-size:clamp(38px,4.4vw,56px);font-weight:700;letter-spacing:-.03em;line-height:1;display:block}
+.num b .u{font-size:.44em;font-weight:500;color:var(--txt-2);margin-left:3px}
+.num span{display:block;margin-top:12px;font-size:14.5px;color:var(--txt-2)}
+
+/* ============ PERSONAS ============ */
+.personas{padding:116px 0;background:var(--paper)}
+.p-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.p-card{
+  border:1px solid var(--line);border-radius:14px;padding:34px 30px;background:#fff;
+  position:relative;overflow:hidden;transition:transform .3s cubic-bezier(.22,.7,.3,1),box-shadow .3s;
+  display:flex;flex-direction:column;
+}
+.p-card:hover{transform:translateY(-5px);box-shadow:0 22px 48px rgba(10,27,38,.1)}
+.p-card::after{
+  content:'';position:absolute;right:-34px;top:-34px;width:110px;height:110px;border-radius:50%;
+  background:var(--signal-dim);transform:scale(0);transition:transform .45s cubic-bezier(.22,.7,.3,1);
+}
+.p-card:hover::after{transform:scale(1)}
+.p-card .ic{font-size:26px;margin-bottom:18px;position:relative;z-index:2}
+.p-card h3{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:10px;position:relative;z-index:2}
+.p-card p{font-size:14.5px;color:var(--txt-2);position:relative;z-index:2}
+.p-card .fit{
+  margin-top:auto;padding-top:22px;font-family:var(--tech);font-size:11px;letter-spacing:.16em;
+  color:var(--txt-3);text-transform:uppercase;position:relative;z-index:2;
+}
+.p-6{grid-column:span 6}.p-3{grid-column:span 3}
+
+/* ============ VOICES ============ */
+.voices{background:var(--ink);color:var(--paper);padding:112px 0 120px;overflow:hidden}
+.voices::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 88% 10%,rgba(15,191,127,.09),transparent 42%);
+}
+.voices .wrap{position:relative}
+.v-list{display:flex;flex-direction:column;gap:0}
+.v-row{
+  display:grid;grid-template-columns:120px 1fr;gap:34px;padding:36px 6px;
+  border-bottom:1px solid var(--line-dark);align-items:start;
+  transition:padding-left .3s cubic-bezier(.22,.7,.3,1);
+}
+.v-row:first-child{border-top:1px solid var(--line-dark)}
+.v-row:hover{padding-left:20px}
+.v-row .q{font-family:var(--disp);font-size:52px;line-height:.6;color:var(--signal);font-weight:700;padding-top:14px}
+.v-row blockquote{font-size:clamp(18px,2vw,23px);font-weight:600;letter-spacing:-.015em;line-height:1.5}
+.v-row cite{display:block;margin-top:16px;font-style:normal;font-size:13.5px;color:rgba(246,246,242,.45)}
+.v-row cite b{color:var(--signal);font-weight:600}
+.voices-note{margin-top:34px;font-size:12.5px;color:rgba(246,246,242,.35)}
+
+/* ============ FAQ ============ */
+.faq{padding:116px 0;background:var(--paper)}
+.faq-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start}
+.faq-side{position:sticky;top:110px}
+.f-item{border-bottom:1px solid var(--line)}
+.f-item:first-child{border-top:1px solid var(--line)}
+.f-q{
+  width:100%;background:none;border:none;text-align:left;
+  display:flex;align-items:center;gap:18px;padding:24px 6px;
+  font-size:17px;font-weight:650;color:var(--txt);letter-spacing:-.01em;
+  transition:color .2s;
+}
+.f-q:hover{color:#0A8F60}
+.f-q .pm{
+  margin-left:auto;flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);
+  display:grid;place-items:center;font-family:var(--disp);font-size:16px;font-weight:500;
+  transition:transform .35s cubic-bezier(.22,.7,.3,1),background .25s,color .25s,border-color .25s;
+}
+.f-item.open .f-q .pm{transform:rotate(45deg);background:var(--ink);color:var(--signal);border-color:var(--ink)}
+.f-a{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.22,.7,.3,1)}
+.f-a p{padding:0 6px 26px;font-size:15px;color:var(--txt-2);max-width:640px}
+.f-a p b{color:var(--txt)}
+
+/* ============ LEAD ============ */
+.lead{
+  background:var(--ink);color:var(--paper);padding:118px 0 126px;position:relative;overflow:hidden;
+}
+.lead::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(15,191,127,.12),transparent 44%),
+    linear-gradient(rgba(246,246,242,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(246,246,242,.03) 1px,transparent 1px);
+  background-size:auto,46px 46px,46px 46px;
+}
+.lead .wrap{position:relative}
+.lead-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:start}
+.lead h2{font-size:clamp(30px,3.6vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1.22;margin-top:20px}
+.lead .lp{color:rgba(246,246,242,.62);font-size:16.5px;margin-top:18px}
+.lead-perks{margin-top:34px;display:flex;flex-direction:column;gap:15px}
+.lead-perks li{list-style:none;display:flex;gap:13px;align-items:flex-start;font-size:15.5px;color:rgba(246,246,242,.82)}
+.lead-perks li::before{content:'✓';color:var(--signal);font-weight:800;flex:none;margin-top:1px}
+.lead-contact{margin-top:40px;padding-top:26px;border-top:1px solid var(--line-dark);font-size:14px;color:rgba(246,246,242,.5)}
+.lead-contact b{color:var(--paper);font-weight:600}
+/* form */
+.lead-form{
+  background:var(--ink-2);border:1px solid var(--line-dark);border-radius:16px;padding:40px 38px;
+  box-shadow:0 30px 70px rgba(0,0,0,.3);
+}
+.lf-title{font-family:var(--tech);font-size:12px;letter-spacing:.24em;color:var(--signal);text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:12px}
+.lf-title::after{content:'';flex:1;height:1px;background:var(--line-dark)}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.f-field{display:flex;flex-direction:column;gap:7px}
+.f-field.full{grid-column:span 2}
+.f-field label{font-size:13px;font-weight:600;color:rgba(246,246,242,.72)}
+.f-field label em{color:var(--signal);font-style:normal}
+.f-field input,.f-field select,.f-field textarea{
+  background:rgba(246,246,242,.05);border:1px solid var(--line-dark);border-radius:8px;
+  padding:13px 15px;color:var(--paper);font-family:var(--body);font-size:15px;
+  transition:border-color .2s,background .2s,box-shadow .2s;appearance:none;
+}
+.f-field select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230FBF7F' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 15px center;
+}
+.f-field select option{background:var(--ink-2);color:var(--paper)}
+.f-field input::placeholder,.f-field textarea::placeholder{color:rgba(246,246,242,.3)}
+.f-field input:focus,.f-field select:focus,.f-field textarea:focus{
+  outline:none;border-color:var(--signal);background:rgba(15,191,127,.06);
+  box-shadow:0 0 0 3px rgba(15,191,127,.14);
+}
+.f-field input.err,.f-field select.err{border-color:#FF6B6B;box-shadow:0 0 0 3px rgba(255,107,107,.14)}
+.f-field textarea{resize:vertical;min-height:96px}
+.lf-submit{width:100%;justify-content:center;margin-top:8px;font-size:16px;padding:17px}
+.lf-privacy{margin-top:16px;font-size:12px;color:rgba(246,246,242,.38);text-align:center}
+/* success state */
+.lf-success{display:none;text-align:center;padding:56px 20px}
+.lf-success.show{display:block;animation:rowIn .5s both}
+.lf-success .ck{
+  width:76px;height:76px;border-radius:50%;background:var(--signal);color:var(--ink);
+  display:grid;place-items:center;font-size:34px;font-weight:800;margin:0 auto 24px;
+  animation:ckPop .55s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes ckPop{from{transform:scale(0)}to{transform:scale(1)}}
+.lf-success h3{font-size:23px;font-weight:800;margin-bottom:12px}
+.lf-success p{color:rgba(246,246,242,.6);font-size:15px}
+
+/* ============ FOOTER ============ */
+footer{background:#071420;color:rgba(246,246,242,.5);padding:64px 0 46px;font-size:13.5px}
+.ft-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;padding-bottom:38px;border-bottom:1px solid var(--line-dark)}
+.ft-brand .logo{color:var(--paper);margin-bottom:16px}
+.ft-brand p{max-width:340px;line-height:1.7}
+.ft-cols{display:flex;gap:74px;flex-wrap:wrap}
+.ft-cols h4{font-family:var(--tech);font-size:11px;letter-spacing:.22em;color:rgba(246,246,242,.4);text-transform:uppercase;margin-bottom:16px}
+.ft-cols a{display:block;padding:5px 0;transition:color .2s}
+.ft-cols a:hover{color:var(--signal)}
+.ft-bottom{padding-top:30px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12.5px;color:rgba(246,246,242,.32)}
+.ft-company{display:flex;flex-direction:column;gap:5px}
+.ft-company strong{color:rgba(246,246,242,.72);font-size:13px;font-weight:700}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1020px){
+  .hero-grid{grid-template-columns:1fr;gap:48px}
+  .hero{padding-top:132px}
+  .steps{grid-template-columns:1fr;gap:34px}
+  .steps::before{display:none}
+  .step{display:grid;grid-template-columns:58px 1fr;gap:20px;align-items:start}
+  .step .n{grid-row:span 2}
+  .step h3{margin-top:2px}
+  .b-7,.b-5,.b-4{grid-column:span 12}
+  .num-grid{grid-template-columns:1fr 1fr;gap:40px 28px}
+  .p-6,.p-3{grid-column:span 12}
+  .faq-grid{grid-template-columns:1fr;gap:40px}
+  .faq-side{position:static}
+  .lead-grid{grid-template-columns:1fr;gap:52px}
+  .lrow{grid-template-columns:56px 1fr;gap:14px}
+  .lrow p{grid-column:2}
+  .v-row{grid-template-columns:60px 1fr;gap:20px}
+  .v-row .q{font-size:38px}
+}
+@media (max-width:760px){
+  .nav{display:none}
+  .gnb-cta{display:none}
+  .burger{display:block}
+  .m-nav{display:flex}
+  .wrap{padding:0 20px}
+  .hero{padding-top:118px;padding-bottom:70px}
+  .hero-ctas .btn{flex:1;justify-content:center}
+  .con-foot{flex-direction:column}
+  .con-foot .cell{border-right:none;border-bottom:1px solid var(--line-dark)}
+  .con-foot .cell:last-child{border-bottom:none}
+  .f-row{grid-template-columns:1fr}
+  .f-field.full{grid-column:span 1}
+  .lead-form{padding:30px 22px}
+  .num-grid{grid-template-columns:1fr}
+  .problem,.lifecycle,.bento,.personas,.voices,.faq,.lead{padding-top:82px;padding-bottom:88px}
+}
+/* reduced motion */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ GNB ============ -->
+<header class="gnb" id="gnb">
+  <div class="wrap gnb-in">
+    <a href="#top" class="logo">
+      <span class="sig" aria-hidden="true"><i></i><i></i><i></i></span>
+      WORK MOBILE <small>BY MOBIT</small>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a class="nl" href="#problem">문제</a>
+      <a class="nl" href="#lifecycle">작동 방식</a>
+      <a class="nl" href="#features">기능</a>
+      <a class="nl" href="#faq">FAQ</a>
+    </nav>
+    <div class="gnb-cta">
+      <a href="#lead" class="btn btn-ghost" data-deck>소개서 받기</a>
+      <a href="#lead" class="btn btn-solid">파일럿 신청 <span class="arr">→</span></a>
+    </div>
+    <button class="burger" id="burger" aria-label="메뉴 열기" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="m-nav" id="mnav" aria-label="모바일 메뉴">
+  <a href="#problem">문제</a>
+  <a href="#lifecycle">작동 방식</a>
+  <a href="#features">기능</a>
+  <a href="#faq">FAQ</a>
+  <a href="#lead" class="btn btn-solid">파일럿 신청하기 <span class="arr">→</span></a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="label rv on">기업 업무용 회선 인프라</span>
+      <h1 class="rv on" data-d="1">업무용 회선을<br><span class="hl">이메일 계정</span>처럼<br>발급하세요</h1>
+      <p class="sub rv on" data-d="2">
+        개통·배정·정산·회수를 몇 분 안에.<br>
+        직원 개인폰에 흩어진 업무 번호를 <strong>회사가 관리하는 자산</strong>으로 만드세요.
+      </p>
+      <div class="hero-ctas rv on" data-d="3">
+        <a href="#lead" class="btn btn-solid">파일럿 신청하기 <span class="arr">→</span></a>
+        <a href="#lead" class="btn btn-ghost" data-deck>소개서 받기</a>
+      </div>
+      <div class="hero-note rv on" data-d="4">
+        <span class="dot"></span> 파일럿 프로그램 파트너사 모집 중 — 초기 5개사 한정
+      </div>
+    </div>
+
+    <div class="rv on" data-d="2">
+      <div class="console" role="img" aria-label="WORK MOBILE 관리 콘솔 데모: 회선 발급, 개통 완료, 퇴사자 회수, 통합 청구가 실시간으로 처리되는 화면">
+        <div class="con-head">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="ttl">WORK MOBILE CONSOLE</span>
+          <span class="live">LIVE</span>
+        </div>
+        <div class="con-body" id="conBody"></div>
+        <div class="con-foot">
+          <div class="cell"><b>128</b><span>활성 회선</span></div>
+          <div class="cell"><b><em>+</em>12</b><span>이번 달 발급</span></div>
+          <div class="cell"><b>0</b><span>회수 대기</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TICKER ============ -->
+<div class="ticker" aria-hidden="true">
+  <div class="tk-track" id="tkTrack">
+    <span>영업 조직</span><span>현장 인력</span><span>다지점 프랜차이즈</span><span>플랫폼·긱워커</span>
+    <span>스타트업</span><span>물류·배송</span><span>부동산 중개</span><span>병의원·상담 조직</span>
+  </div>
+</div>
+
+<!-- ============ PROBLEM ============ -->
+<section class="problem dark" id="problem">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="label">PROBLEM</span>
+      <h2>회선이 없어서가 아닙니다.<br><span class="dim">너무 번거로워서</span> 개인폰으로 버티는 겁니다.</h2>
+      <p>업무용 번호가 필요한데도, 개통·명의·정산·회수의 마찰 때문에 대부분의 기업이 직원 개인폰에 업무를 맡깁니다.</p>
+    </div>
+    <div class="ledger">
+      <div class="lrow rv"><span class="no">01</span><h3>개통 번거로움</h3><p>대면·서류 중심 개통. 신규 회선 하나에 며칠에서 몇 주가 걸립니다.</p></div>
+      <div class="lrow rv" data-d="1"><span class="no">02</span><h3>명의 혼재</h3><p>법인명의와 개인명의가 뒤섞여 누구 번호가 업무용인지 아무도 모릅니다.</p></div>
+      <div class="lrow rv" data-d="2"><span class="no">03</span><h3>비용 정산</h3><p>회선별 청구가 분산되고, 통신비 보조 정산은 매달 관리자의 수작업입니다.</p></div>
+      <div class="lrow rv" data-d="3"><span class="no">04</span><h3>입퇴사 처리</h3><p>발급·정지·회수가 전부 수동. 바쁜 달엔 누락이 당연해집니다.</p></div>
+      <div class="lrow rv" data-d="4"><span class="no">05</span><h3>번호 회수 실패</h3><p>퇴사자가 떠나면 그 번호로 연결되던 고객 연락처도 함께 사라집니다.</p></div>
+      <div class="lrow rv" data-d="5"><span class="no">06</span><h3>운영 파편화</h3><p>통신사별 별도 관리, API 없음. 회선 현황은 엑셀과 기억에 의존합니다.</p></div>
+    </div>
+    <div class="hidden-demand rv">
+      <div class="big">법인회선 통계는<br><em>숨은 수요</em>를 잡지 못합니다</div>
+      <p>현재 법인회선 수는 마찰을 감수한 고객만 집계한 결과입니다. 개인번호로 고객과 연락하는 조직, 정산이 귀찮아 회선을 포기한 회사 — 이 수요는 통계에 없습니다. <strong style="color:var(--paper)">마찰을 제거하면 시장이 열립니다.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIFECYCLE ============ -->
+<section class="lifecycle" id="lifecycle">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="label">HOW IT WORKS</span>
+      <h2>이메일 계정 만들듯이,<br>회선의 전 생애주기를 관리합니다</h2>
+      <p>요청부터 회수까지. 입사·이동·퇴사에 따라 회선이 자동으로 따라갑니다.</p>
+    </div>
+    <div class="steps">
+      <div class="step rv"><div class="n">1</div><h3><small>Issue</small>발급</h3><p>eSIM 기반 원격 개통. 서류도, 배송도, 방문도 없습니다.</p><span class="tag">평균 3분</span></div>
+      <div class="step rv" data-d="1"><div class="n">2</div><h3><small>Assign</small>배정</h3><p>임직원·부서·프로젝트에 매핑. 누가 어떤 번호를 쓰는지 항상 명확합니다.</p><span class="tag">사용자 매핑</span></div>
+      <div class="step rv" data-d="2"><div class="n">3</div><h3><small>Policy</small>정책</h3><p>요금 상한, 데이터 한도, 용도 제한을 회선별로 설정합니다.</p><span class="tag">부서별 정책</span></div>
+      <div class="step rv" data-d="3"><div class="n">4</div><h3><small>Bill</small>청구</h3><p>기업 단위 통합 청구. 부서별·프로젝트별 비용 배분까지 한 장으로.</p><span class="tag">청구서 1장</span></div>
+      <div class="step rv" data-d="4"><div class="n">5</div><h3><small>Recall</small>회수</h3><p>퇴사 처리와 동시에 회선 정지·회수. 번호와 고객 접점은 회사에 남습니다.</p><span class="tag">소실 0건</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES (BENTO) ============ -->
+<section class="bento" id="features">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="label">FEATURES</span>
+      <h2>관리자를 위한 콘솔,<br>직원을 위한 가벼운 경험</h2>
+    </div>
+    <div class="b-grid">
+      <div class="b-card b-7 rv">
+        <span class="k">Admin Dashboard</span>
+        <h3>모든 회선을 한 화면에서</h3>
+        <p>임직원별 회선 현황, 사용량, 비용을 실시간으로. 엑셀로 관리하던 회선 장부를 대체합니다.</p>
+        <div class="mini-dash" aria-hidden="true">
+          <div class="md-head"><span>사용자</span><span>부서</span><span>상태</span><span style="text-align:right">월 비용</span></div>
+          <div class="md-row"><span class="who">김민준</span><span>영업1팀</span><span class="st-on">● 활성</span><span class="cost">₩32,000</span></div>
+          <div class="md-row"><span class="who">이서연</span><span>영업2팀</span><span class="st-on">● 활성</span><span class="cost">₩28,500</span></div>
+          <div class="md-row"><span class="who">박지호</span><span>현장운영</span><span class="st-on">● 활성</span><span class="cost">₩41,000</span></div>
+          <div class="md-row"><span class="who">최다은</span><span>퇴사 처리</span><span class="st-off">○ 회수됨</span><span class="cost">₩0</span></div>
+        </div>
+      </div>
+      <div class="b-card b-5 rv" data-d="1">
+        <span class="k">eSIM Remote Issue</span>
+        <h3>몇 분 안에 원격 개통</h3>
+        <p>직원은 QR 한 번 스캔하면 끝. 단말 배송을 기다릴 필요도, 대리점에 갈 필요도 없습니다.</p>
+        <div class="esim-mock" aria-hidden="true">
+          <div class="qr"></div>
+          <div class="flow">
+            <b>eSIM 프로필 발급 → 개통 완료</b>
+            요청 접수 후 평균 <span class="t">3분 12초</span><br>
+            기존 번호 그대로 번호이동 가능
+          </div>
+        </div>
+      </div>
+      <div class="b-card b-4 rv">
+        <span class="k">Integrated Billing</span>
+        <h3>통합 청구·정산</h3>
+        <p>회선별 청구서 더미는 끝. 부서별·프로젝트별 비용 배분까지 기업 단위 청구서 한 장으로.</p>
+      </div>
+      <div class="b-card b-4 rv" data-d="1">
+        <span class="k">HR · SaaS 연동</span>
+        <h3>입퇴사가 곧 회선 처리</h3>
+        <p>HR 시스템, Google Workspace, Slack과 연동. 입사하면 발급되고 퇴사하면 회수됩니다.</p>
+      </div>
+      <div class="b-card b-4 rv" data-d="2">
+        <span class="k">Open API</span>
+        <h3>통신 운영을 코드로</h3>
+        <p>회선 상태·사용량·발급·정지 전부를 API로. 사내 시스템에 그대로 붙이세요.</p>
+        <div class="api-mock" aria-hidden="true">
+<span class="c"># 회선 발급 요청</span><br>
+POST <span class="g">/v1/lines</span><br>
+{ <span class="a">"user"</span>: <span class="g">"minjun@corp.kr"</span>,<br>
+&nbsp;&nbsp;<span class="a">"plan"</span>: <span class="g">"biz-5g-32"</span> }<br>
+<span class="c">→ 201 Created · 3m 12s</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NUMBERS ============ -->
+<section class="numbers">
+  <div class="wrap num-grid">
+    <div class="num rv"><b><span data-count="3">0</span><span class="u">분</span></b><span>요청부터 개통 완료까지 — 서류·방문·배송 없음</span></div>
+    <div class="num rv" data-d="1"><b><span data-count="1">0</span><span class="u">장</span></b><span>전 회선 통합 청구서 — 부서별 비용 배분 포함</span></div>
+    <div class="num rv" data-d="2"><b><span data-count="0">0</span><span class="u">건</span></b><span>퇴사자 번호·고객 접점 소실 — 자동 회수</span></div>
+    <div class="num rv" data-d="3"><b><span data-count="100">0</span><span class="u">%</span></b><span>API 기반 운영 — 통신사별 파편화 없음</span></div>
+  </div>
+</section>
+
+<!-- ============ PERSONAS ============ -->
+<section class="personas">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="label">WHO IT'S FOR</span>
+      <h2>이런 조직이라면,<br>지금 개인폰으로 버티고 있을 확률이 높습니다</h2>
+    </div>
+    <div class="p-grid">
+      <div class="p-card p-6 rv">
+        <div class="ic">📞</div>
+        <h3>영업 조직</h3>
+        <p>퇴사하는 영업사원이 고객 연락처를 들고 나갑니다. 번호가 회사 자산이어야 고객이 회사에 남습니다. 콜 기록과 후속 대응까지 연결되는 출발점이 업무용 번호입니다.</p>
+        <span class="fit">B2B 영업팀 · 보험 · 부동산</span>
+      </div>
+      <div class="p-card p-6 rv" data-d="1">
+        <div class="ic">🏗️</div>
+        <h3>현장 인력 조직</h3>
+        <p>단기 프로젝트, 계약직, 파견 인력. 입퇴사가 잦을수록 회선 발급·회수 자동화의 가치는 커집니다. 프로젝트 단위로 회선을 묶고 비용을 배분하세요.</p>
+        <span class="fit">건설 · 물류 · 설치·AS 조직</span>
+      </div>
+      <div class="p-card p-3 rv">
+        <div class="ic">🏪</div>
+        <h3>다지점·프랜차이즈</h3>
+        <p>지점별 회선을 본사에서 한눈에. 점주가 바뀌어도 번호는 브랜드에 남습니다.</p>
+        <span class="fit">프랜차이즈 · 체인 본사</span>
+      </div>
+      <div class="p-card p-3 rv" data-d="1">
+        <div class="ic">🛵</div>
+        <h3>플랫폼·긱 조직</h3>
+        <p>라이더·파트너에게 유연하게 회선을 지급하고, 계약 종료와 동시에 회수합니다.</p>
+        <span class="fit">플랫폼 · 배송 · 프리랜서 풀</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VOICES ============ -->
+<section class="voices dark">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="label">FIELD VOICES</span>
+      <h2>현장에서 들은 이야기</h2>
+      <p>파일럿 고객 탐색 인터뷰에서 반복적으로 나온 목소리입니다.</p>
+    </div>
+    <div class="v-list">
+      <div class="v-row rv">
+        <div class="q">“</div>
+        <div>
+          <blockquote>영업사원이 퇴사했는데 고객 연락처를 그 사람 번호가 다 가지고 있었어요. 번호를 달라고 하기도 어렵고, 고객들은 그 번호로 계속 전화를 합니다.</blockquote>
+          <cite><b>제조업 영업팀장</b> · 직원 40명 규모</cite>
+        </div>
+      </div>
+      <div class="v-row rv" data-d="1">
+        <div class="q">“</div>
+        <div>
+          <blockquote>신규 인력이 들어올 때마다 선불 유심을 사서 개인명의로 개통해요. 퇴사하면 그냥 버려지고, 정산은 매달 수작업입니다.</blockquote>
+          <cite><b>플랫폼 운영 매니저</b> · 현장 인력 200명 규모</cite>
+        </div>
+      </div>
+      <div class="v-row rv" data-d="2">
+        <div class="q">“</div>
+        <div>
+          <blockquote>통신비를 인당 보조해주고는 있는데, 실제로 업무에 쓰이는지 확인할 방법이 없어요. 법인회선을 주자니 관리가 더 귀찮고요.</blockquote>
+          <cite><b>IT 스타트업 대표</b> · 직원 15명 규모</cite>
+        </div>
+      </div>
+    </div>
+    <p class="voices-note">※ 인터뷰 인용은 실제 고객 검증 과정에서 수집된 발언을 각색한 것입니다. 정식 고객 레퍼런스는 파일럿 진행 후 추가됩니다.</p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq">
+  <div class="wrap faq-grid">
+    <div class="faq-side rv">
+      <span class="label">FAQ</span>
+      <h2 style="font-size:clamp(28px,3.2vw,40px);font-weight:800;letter-spacing:-.03em;line-height:1.25;margin-top:20px">도입 전에<br>가장 많이 묻는 질문</h2>
+      <p style="color:var(--txt-2);margin-top:16px;font-size:15.5px">더 궁금한 점은 파일럿 신청 시 담당자가 직접 답변드립니다.</p>
+      <a href="#lead" class="btn btn-solid" style="margin-top:28px">질문 남기기 <span class="arr">→</span></a>
+    </div>
+    <div id="faqList">
+      <div class="f-item">
+        <button class="f-q" aria-expanded="false">기존 법인폰(통신사 기업 요금제)과 뭐가 다른가요?<span class="pm">+</span></button>
+        <div class="f-a"><p>통신사 기업 요금제는 <b>회선을 싸게 사는 것</b>까지입니다. 발급·배정·정산·회수 운영은 여전히 사람 손으로 해야 합니다. WORK MOBILE은 회선 자체를 <b>소프트웨어로 운영하는 인프라</b>입니다. eSIM 원격 발급, 임직원 매핑, 통합 청구, 퇴사 자동 회수, API까지 포함됩니다.</p></div>
+      </div>
+      <div class="f-item">
+        <button class="f-q" aria-expanded="false">직원 휴대폰이 eSIM을 지원해야 하나요?<span class="pm">+</span></button>
+        <div class="f-a"><p>2019년 이후 출시된 대부분 스마트폰(아이폰 XS 이후, 갤럭시 S20 이후 등)은 eSIM을 지원합니다. 미지원 단말에는 <b>실물 USIM 배송 옵션</b>을 병행하며, 파일럿 단계에서 보유 단말 현황을 먼저 점검해 드립니다.</p></div>
+      </div>
+      <div class="f-item">
+        <button class="f-q" aria-expanded="false">직원들이 쓰던 기존 번호를 그대로 쓸 수 있나요?<span class="pm">+</span></button>
+        <div class="f-a"><p>가능합니다. <b>번호이동</b>으로 기존 번호를 법인 관리 회선으로 전환할 수 있습니다. 개인명의 번호를 회사 자산으로 이전하는 절차도 파일럿 온보딩 시 함께 진행합니다.</p></div>
+      </div>
+      <div class="f-item">
+        <button class="f-q" aria-expanded="false">청구와 비용 정산은 어떻게 되나요?<span class="pm">+</span></button>
+        <div class="f-a"><p>전 회선이 <b>기업 명의 통합 청구서 한 장</b>으로 발행됩니다. 부서별·프로젝트별 비용 배분 리포트를 제공하며, 인당 보조금 정책과 연동한 정산 데이터도 내려받을 수 있습니다.</p></div>
+      </div>
+      <div class="f-item">
+        <button class="f-q" aria-expanded="false">직원이 퇴사하면 번호는 어떻게 되나요?<span class="pm">+</span></button>
+        <div class="f-a"><p>HR 연동 또는 관리자 원클릭으로 <b>퇴사 처리와 동시에 회선이 정지·회수</b>됩니다. 번호 소유권은 회사에 있으므로 고객 접점이 소실되지 않고, 신규 입사자에게 재배정할 수 있습니다.</p></div>
+      </div>
+      <div class="f-item">
+        <button class="f-q" aria-expanded="false">통신 비밀·개인정보 문제는 없나요?<span class="pm">+</span></button>
+        <div class="f-a"><p>회선 관리 데이터(상태·사용량·비용)만 다루며, <b>통화 내용이나 문자 내용은 열람하지 않습니다</b>. 업무용 회선임을 명확히 하는 사내 가이드라인 수립도 지원합니다. 관련 법령 검토 자료는 소개서에 포함되어 있습니다.</p></div>
+      </div>
+      <div class="f-item">
+        <button class="f-q" aria-expanded="false">파일럿 조건은 어떻게 되나요?<span class="pm">+</span></button>
+        <div class="f-a"><p>초기 <b>5개사 한정</b>으로 진행하며, 회선 규모는 10~200회선 조직을 우선합니다. 파일럿 기간 관리 수수료 면제와 전용 온보딩을 제공하고, 함께 만든 운영 프로세스를 귀사 맞춤으로 설계해 드립니다.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEAD ============ -->
+<section class="lead dark" id="lead">
+  <div class="wrap lead-grid">
+    <div class="rv">
+      <span class="label">PILOT PROGRAM</span>
+      <h2>개인폰 업무,<br>이제 끝낼 준비가 되셨나요?</h2>
+      <p class="lp">파일럿 프로그램에 신청하시면 담당자가 1영업일 이내에 연락드립니다. 회선 현황 진단부터 도입 설계까지 무료로 진행됩니다.</p>
+      <ul class="lead-perks">
+        <li>초기 5개사 한정 — 관리 수수료 면제</li>
+        <li>보유 단말·회선 현황 무료 진단</li>
+        <li>번호이동·명의 전환 절차 전담 지원</li>
+        <li>귀사 조직에 맞는 회선 정책 공동 설계</li>
+      </ul>
+      <div class="lead-contact">
+        직접 문의를 원하시면<br><b>hello@mobit.kr</b> 로 보내주세요.
+      </div>
+    </div>
+
+    <div class="rv" data-d="1">
+      <form class="lead-form" id="leadForm" novalidate>
+        <div class="lf-title">파일럿 신청서</div>
+        <div id="formFields">
+          <div class="f-row">
+            <div class="f-field"><label for="fCompany">회사명 <em>*</em></label><input id="fCompany" name="company" type="text" placeholder="회사명을 입력하세요" required></div>
+            <div class="f-field"><label for="fName">성함 <em>*</em></label><input id="fName" name="name" type="text" placeholder="홍길동" required></div>
+          </div>
+          <div class="f-row">
+            <div class="f-field"><label for="fRole">직함</label><input id="fRole" name="role" type="text" placeholder="예: 경영지원 팀장"></div>
+            <div class="f-field"><label for="fPhone">연락처 <em>*</em></label><input id="fPhone" name="phone" type="tel" placeholder="010-0000-0000" required></div>
+          </div>
+          <div class="f-row">
+            <div class="f-field"><label for="fEmail">업무용 이메일 <em>*</em></label><input id="fEmail" name="email" type="email" placeholder="you@company.com" required></div>
+            <div class="f-field"><label for="fLines">예상 회선 규모</label>
+              <select id="fLines" name="lines">
+                <option value="">선택</option>
+                <option>1~10회선</option>
+                <option>10~50회선</option>
+                <option>50~200회선</option>
+                <option>200회선 이상</option>
+              </select>
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-field full"><label for="fInterest">관심 분야</label>
+              <select id="fInterest" name="interest">
+                <option value="pilot">파일럿 프로그램 신청</option>
+                <option value="deck">소개서 수신</option>
+                <option value="consult">도입 상담</option>
+              </select>
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-field full"><label for="fMsg">남기실 말씀</label><textarea id="fMsg" name="message" placeholder="현재 회선 운영에서 겪는 어려움을 간단히 적어주시면 상담이 더 정확해집니다."></textarea></div>
+          </div>
+          <button type="submit" class="btn btn-signal lf-submit">신청서 제출하기 <span class="arr">→</span></button>
+          <p class="lf-privacy">제출하신 정보는 상담 목적으로만 사용되며, 동의 없이 제3자에게 제공되지 않습니다.</p>
+        </div>
+        <div class="lf-success" id="lfSuccess">
+          <div class="ck">✓</div>
+          <h3>신청이 접수되었습니다</h3>
+          <p id="successMsg">담당자가 1영업일 이내에 연락드리겠습니다.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <a href="#top" class="logo"><span class="sig" aria-hidden="true"><i></i><i></i><i></i></span> WORK MOBILE <small>BY MOBIT</small></a>
+        <p>기업의 모든 모바일 회선을 소프트웨어로 운영합니다. 업무용 회선을 이메일 계정처럼 발급·관리·회수하는 SaaS·통신 결합 인프라.</p>
+      </div>
+      <div class="ft-cols">
+        <div>
+          <h4>Product</h4>
+          <a href="#problem">문제 정의</a>
+          <a href="#lifecycle">작동 방식</a>
+          <a href="#features">기능</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <a href="mailto:hello@mobit.kr">hello@mobit.kr</a>
+          <a href="#lead">파일럿 신청</a>
+          <a href="#lead">소개서 받기</a>
+        </div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <div class="ft-company">
+        <strong>모빗 주식회사</strong>
+        <span>대표: 윤이삭 · 사업자등록번호: 812-88-04090</span>
+        <span>경기 용인시 수지구 풍덕천동 문인로17번길 5 304호</span>
+      </div>
+      <span>© 2026 Mobit Inc. All rights reserved. · WORK MOBILE은 모빗 주식회사의 기업용 회선 관리 서비스입니다.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- GNB scroll state ---------- */
+  var gnb = document.getElementById('gnb');
+  var onScroll = function(){ gnb.classList.toggle('scrolled', window.scrollY > 8); };
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---------- Mobile nav ---------- */
+  var burger = document.getElementById('burger');
+  var mnav = document.getElementById('mnav');
+  burger.addEventListener('click', function(){
+    var open = mnav.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+  });
+  mnav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      mnav.classList.remove('open'); burger.classList.remove('open');
+      burger.setAttribute('aria-expanded','false');
+    });
+  });
+
+  /* ---------- Scroll reveal ---------- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+    });
+  }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.rv:not(.on)').forEach(function(el){ io.observe(el); });
+
+  /* ---------- Count-up ---------- */
+  var cio = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el = e.target, target = parseInt(el.dataset.count,10) || 0;
+      cio.unobserve(el);
+      var t0 = null, dur = 1300;
+      var tick = function(ts){
+        if(!t0) t0 = ts;
+        var p = Math.min((ts - t0)/dur, 1);
+        p = 1 - Math.pow(1-p, 3); /* easeOutCubic */
+        el.textContent = Math.round(target * p);
+        if(p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }, {threshold:.5});
+  document.querySelectorAll('[data-count]').forEach(function(el){ cio.observe(el); });
+
+  /* ---------- Ticker duplicate for seamless loop ---------- */
+  var tk = document.getElementById('tkTrack');
+  tk.innerHTML += tk.innerHTML;
+
+  /* ---------- Console simulation ---------- */
+  var conBody = document.getElementById('conBody');
+  var SEQ = [
+    {cls:'req',   ic:'＋', st:'요청',   t:'신규 회선 요청', s:'김민준 · 영업1팀'},
+    {cls:'prog',  ic:'⇣', st:'발급 중', t:'eSIM 프로필 발급 중', s:'QR 전송 완료 · 스캔 대기'},
+    {cls:'done',  ic:'✓', st:'개통',   t:'개통 완료 — 010-••••-4821', s:'소요 시간 3분 12초'},
+    {cls:'recall',ic:'↺', st:'회수',   t:'퇴사자 회선 회수', s:'박지호 · 영업2팀 → 번호 자산화 완료'},
+    {cls:'bill',  ic:'￦', st:'청구',   t:'통합 청구서 발행', s:'128회선 · 부서별 배분 완료'},
+    {cls:'req',   ic:'＋', st:'요청',   t:'신규 회선 요청', s:'이서연 · 현장운영팀'},
+    {cls:'done',  ic:'✓', st:'개통',   t:'개통 완료 — 010-••••-7310', s:'소요 시간 2분 48초'}
+  ];
+  var MAX_ROWS = 4;
+  function pushRow(item){
+    var row = document.createElement('div');
+    row.className = 'crow ' + item.cls;
+    var inner = '<span class="ic">' + item.ic + '</span>' +
+      '<span class="tx"><b>' + item.t + '</b><small>' + item.s + '</small>' +
+      (item.cls === 'prog' ? '<span class="bar"><i></i></span>' : '') + '</span>' +
+      '<span class="st">' + item.st + '</span>';
+    row.innerHTML = inner;
+    conBody.appendChild(row);
+    while(conBody.children.length > MAX_ROWS){ conBody.removeChild(conBody.firstChild); }
+    if(item.cls === 'prog'){
+      requestAnimationFrame(function(){
+        var bar = row.querySelector('.bar i');
+        if(bar) bar.style.width = '82%';
+      });
+    }
+  }
+  /* seed initial rows */
+  pushRow(SEQ[0]); pushRow(SEQ[1]); pushRow(SEQ[2]);
+  var seqIdx = 3;
+  setInterval(function(){
+    pushRow(SEQ[seqIdx % SEQ.length]);
+    seqIdx++;
+  }, 2600);
+
+  /* ---------- FAQ accordion ---------- */
+  document.querySelectorAll('.f-item').forEach(function(item){
+    var q = item.querySelector('.f-q');
+    var a = item.querySelector('.f-a');
+    q.addEventListener('click', function(){
+      var isOpen = item.classList.contains('open');
+      /* close others */
+      document.querySelectorAll('.f-item.open').forEach(function(o){
+        if(o !== item){
+          o.classList.remove('open');
+          o.querySelector('.f-q').setAttribute('aria-expanded','false');
+          o.querySelector('.f-a').style.maxHeight = null;
+        }
+      });
+      item.classList.toggle('open', !isOpen);
+      q.setAttribute('aria-expanded', String(!isOpen));
+      a.style.maxHeight = !isOpen ? a.scrollHeight + 'px' : null;
+    });
+  });
+  /* 리사이즈 시 열려 있는 FAQ의 maxHeight 재계산 (콘텐츠 줄바꿈 변화 대응) */
+  var resizeTimer;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function(){
+      document.querySelectorAll('.f-item.open .f-a').forEach(function(a){
+        a.style.maxHeight = a.scrollHeight + 'px';
+      });
+    }, 150);
+  }, {passive:true});
+
+  /* ---------- Deck CTA prefill ---------- */
+  document.querySelectorAll('[data-deck]').forEach(function(a){
+    a.addEventListener('click', function(){
+      var sel = document.getElementById('fInterest');
+      if(sel) sel.value = 'deck';
+    });
+  });
+
+  /* ---------- Lead form ---------- */
+  var form = document.getElementById('leadForm');
+  var required = ['fCompany','fName','fPhone','fEmail'];
+  function validate(el){
+    var ok = el.checkValidity && el.value.trim() !== '';
+    if(el.type === 'email' && ok){
+      ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+    }
+    if(el.type === 'tel' && ok){
+      ok = /^[0-9\-\s]{8,}$/.test(el.value.trim());
+    }
+    el.classList.toggle('err', !ok);
+    return ok;
+  }
+  required.forEach(function(id){
+    var el = document.getElementById(id);
+    el.addEventListener('input', function(){ if(el.classList.contains('err')) validate(el); });
+  });
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var allOk = true, firstBad = null;
+    required.forEach(function(id){
+      var el = document.getElementById(id);
+      if(!validate(el)){ allOk = false; if(!firstBad) firstBad = el; }
+    });
+    if(!allOk){ firstBad.focus(); return; }
+
+    /* TODO(배포 시): 이 payload를 실제 리드 수집 백엔드(폼스프리/시트 API/CRM 웹훅 등)로 전송 */
+    var payload = {};
+    new FormData(form).forEach(function(v,k){ payload[k] = v; });
+    console.info('[WORK MOBILE] lead payload (백엔드 연동 대기):', payload);
+
+    var name = document.getElementById('fName').value.trim();
+    var interest = document.getElementById('fInterest').value;
+    document.getElementById('formFields').style.display = 'none';
+    var succ = document.getElementById('lfSuccess');
+    document.getElementById('successMsg').textContent =
+      interest === 'deck'
+        ? name + '님, 입력하신 이메일로 소개서를 보내드리겠습니다.'
+        : name + '님, 담당자가 1영업일 이내에 연락드리겠습니다.';
+    succ.classList.add('show');
+  });
+})();
+</script>
+</body>
+</html>
