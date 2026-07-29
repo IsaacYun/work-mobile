@@ -10,6 +10,9 @@
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111'/%3E%3Crect x='7' y='17' width='4' height='8' rx='1' fill='%2300C471'/%3E%3Crect x='14' y='12' width='4' height='13' rx='1' fill='%2300C471'/%3E%3Crect x='21' y='7' width='4' height='18' rx='1' fill='%2300C471'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 /* ============ TOKENS ============ */
 :root{
@@ -32,9 +35,10 @@
   --r:18px;
   --r-sm:12px;
   --r-xs:9px;
-  --shadow:0 6px 28px rgba(16,20,24,.07);
-  --shadow-lg:0 24px 60px rgba(16,20,24,.12);
+  --shadow:0 1px 2px rgba(16,20,24,.05),0 4px 14px -6px rgba(16,20,24,.08);
+  --shadow-lg:0 2px 4px rgba(16,20,24,.05),0 12px 32px -12px rgba(16,20,24,.12);
   --font:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',sans-serif;
+  --disp:'Archivo','Pretendard Variable',Pretendard,sans-serif;
   --mono:'Pretendard Variable',Pretendard,monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -51,9 +55,7 @@ img{max-width:100%}
 .rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.22,.7,.3,1),transform .7s cubic-bezier(.22,.7,.3,1)}
 .rv.on{opacity:1;transform:none}
 .rv[data-d="1"]{transition-delay:.1s}.rv[data-d="2"]{transition-delay:.2s}.rv[data-d="3"]{transition-delay:.3s}.rv[data-d="4"]{transition-delay:.4s}
-.kicker{display:inline-flex;align-items:center;font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--accent-deep);text-transform:uppercase;margin-bottom:16px}
-.kicker::before{content:'';width:22px;height:2px;background:var(--accent);margin-right:10px;border-radius:2px}
-.sec-h2{font-size:clamp(28px,3.6vw,42px);font-weight:800;letter-spacing:-.035em;color:var(--ink);line-height:1.22}
+.sec-h2{font-family:var(--disp);font-size:clamp(28px,3.6vw,42px);font-weight:800;letter-spacing:-.035em;color:var(--ink);line-height:1.22}
 .sec-sub{font-size:16px;color:var(--ink-3);margin-top:16px;line-height:1.7}
 
 /* ============ BUTTONS ============ */
@@ -61,15 +63,15 @@ img{max-width:100%}
 .btn .arr{transition:transform .25s}
 .btn:hover .arr{transform:translateX(4px)}
 .btn-accent{background:var(--accent);color:#fff}
-.btn-accent:hover{background:var(--accent-deep);transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,196,113,.32)}
+.btn-accent:hover{background:var(--accent-deep);transform:translateY(-1px);box-shadow:0 4px 12px -4px rgba(16,20,24,.2)}
 .btn-dark{background:var(--ink);color:#fff}
-.btn-dark:hover{background:#000;transform:translateY(-2px);box-shadow:0 12px 30px rgba(16,20,24,.22)}
+.btn-dark:hover{background:#000;transform:translateY(-1px);box-shadow:0 4px 12px -4px rgba(16,20,24,.25)}
 .btn-ghost{background:rgba(16,20,24,.03);border:1.5px solid var(--line);color:var(--ink)}
-.btn-ghost:hover{border-color:var(--ink);transform:translateY(-2px)}
+.btn-ghost:hover{border-color:var(--ink);transform:translateY(-1px)}
 .btn-sm{padding:9px 18px;font-size:14px;border-radius:99px}
 
 /* ============ GNB ============ */
-.gnb{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s}
+.gnb{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s}
 .gnb.scrolled{border-color:var(--line);box-shadow:0 2px 20px rgba(16,20,24,.05)}
 .gnb-in{max-width:1120px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.02em;color:var(--ink)}
@@ -96,16 +98,15 @@ img{max-width:100%}
 
 /* ============ HERO ============ */
 .hero{padding:150px 0 0;background:var(--bg-soft);position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 75% 10%,rgba(0,196,113,.08),transparent 70%),radial-gradient(ellipse 40% 35% at 10% 90%,rgba(0,196,113,.05),transparent 70%)}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,196,113,.045),transparent 55%)}
 .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(0,196,113,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,196,113,.04) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 70% 55% at 60% 30%,#000 20%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse 70% 55% at 60% 30%,#000 20%,transparent 80%)}
 .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding-bottom:72px}
 /* 실시간 카운터 배지 (museby: 협업 가능 인플루언서 7,697명) */
-.live-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--accent-border);border-radius:99px;padding:8px 18px 8px 14px;margin-bottom:26px;box-shadow:0 3px 14px rgba(0,196,113,.1)}
-.live-badge .pulse{width:9px;height:9px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,196,113,.5)}70%{box-shadow:0 0 0 9px rgba(0,196,113,0)}100%{box-shadow:0 0 0 0 rgba(0,196,113,0)}}
+.live-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--accent-border);border-radius:99px;padding:8px 18px 8px 14px;margin-bottom:26px}
+.live-badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--accent)}
 .live-badge span{font-size:13.5px;font-weight:600;color:var(--ink-2)}
 .live-badge b{color:var(--accent-deep);font-weight:800}
-.hero h1{font-size:clamp(36px,4.6vw,52px);font-weight:900;line-height:1.16;letter-spacing:-.045em;color:var(--ink);margin-bottom:22px}
+.hero h1{font-family:var(--disp);font-size:clamp(36px,4.6vw,52px);font-weight:900;line-height:1.16;letter-spacing:-.045em;color:var(--ink);margin-bottom:22px}
 .hero h1 .grn{color:var(--accent)}
 .hero .sub{font-size:17px;line-height:1.7;color:var(--ink-3);max-width:470px;margin-bottom:34px}
 .hero .sub b{color:var(--ink);font-weight:600}
@@ -119,7 +120,7 @@ img{max-width:100%}
 .dash-head .dots i:nth-child(1){background:#FF6159}.dash-head .dots i:nth-child(2){background:#FFBD2E}.dash-head .dots i:nth-child(3){background:#28CA41}
 .dash-head .ttl{font-size:12px;font-weight:600;color:var(--ink-4);letter-spacing:.04em}
 .dash-head .live-tag{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.12em;color:var(--accent-deep);display:flex;align-items:center;gap:5px}
-.dash-head .live-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite}
+.dash-head .live-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent)}
 .dash-body{padding:14px 18px}
 .drow{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:var(--r-sm);border:1px solid var(--line-2);margin-bottom:7px;transition:all .25s;background:#fff;cursor:pointer}
 .drow:hover{border-color:var(--accent-border);background:var(--accent-soft);transform:translateX(4px)}
@@ -135,7 +136,7 @@ img{max-width:100%}
 .dash-foot{display:flex;border-top:1px solid var(--line-2);background:var(--bg-soft)}
 .dash-foot .cell{flex:1;padding:13px 16px;border-right:1px solid var(--line-2);text-align:center}
 .dash-foot .cell:last-child{border-right:none}
-.dash-foot .cell b{display:block;font-size:20px;font-weight:800;color:var(--ink)}
+.dash-foot .cell b{display:block;font-family:var(--disp);font-size:20px;font-weight:800;color:var(--ink)}
 .dash-foot .cell b em{font-style:normal;color:var(--accent-deep)}
 .dash-foot .cell span{font-size:11px;color:var(--ink-4)}
 /* 카테고리 칩 (museby: 가로 스크롤) */
@@ -179,7 +180,7 @@ img{max-width:100%}
 .feat-data{display:flex;gap:14px;margin-top:26px}
 .feat-data .fd{flex:1;background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:18px 20px;transition:all .25s}
 .feat-data .fd:hover{border-color:var(--accent-border);transform:translateY(-3px);box-shadow:var(--shadow)}
-.feat-data .fd b{display:block;font-size:26px;font-weight:900;letter-spacing:-.03em;color:var(--accent-deep)}
+.feat-data .fd b{display:block;font-family:var(--disp);font-size:26px;font-weight:900;letter-spacing:-.03em;color:var(--accent-deep)}
 .feat-data .fd span{font-size:12.5px;color:var(--ink-4);margin-top:4px;display:block}
 /* 목업 카드 공통 */
 .mock{background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;transition:all .35s cubic-bezier(.22,.7,.3,1)}
@@ -206,7 +207,7 @@ img{max-width:100%}
 .flow .node{flex:1;text-align:center;padding:16px 8px;position:relative}
 .flow .node:not(:last-child)::after{content:'→';position:absolute;right:-9px;top:50%;transform:translateY(-50%);color:var(--accent);font-weight:800;z-index:2}
 .flow .node .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:20px;margin:0 auto 10px;background:var(--bg-muted)}
-.flow .node.hot .ic{background:var(--accent-soft)}
+.flow .node.hot .ic{background:var(--accent-soft);color:var(--accent-deep)}
 .flow .node b{display:block;font-size:13px;font-weight:700;color:var(--ink)}
 .flow .node small{font-size:11.5px;color:var(--ink-4)}
 
@@ -222,10 +223,10 @@ img{max-width:100%}
 .plan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .pcard{background:#fff;border:1.5px solid var(--line);border-radius:var(--r);padding:22px 20px;cursor:pointer;transition:all .28s cubic-bezier(.22,.7,.3,1);position:relative}
 .pcard:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--accent-border)}
-.pcard.sel{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 8px 24px rgba(0,196,113,.15)}
+.pcard.sel{border-color:var(--accent);background:var(--accent-soft)}
 .pcard .chk{position:absolute;top:16px;right:16px;width:22px;height:22px;border-radius:7px;border:2px solid var(--line);display:grid;place-items:center;font-size:12px;color:transparent;transition:all .2s;background:#fff}
 .pcard.sel .chk{background:var(--accent);border-color:var(--accent);color:#fff}
-.pcard .pname{font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.02em;padding-right:30px}
+.pcard .pname{font-family:var(--disp);font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.02em;padding-right:30px}
 .pcard .ptags{display:flex;gap:6px;margin:10px 0 16px;flex-wrap:wrap}
 .pcard .ptags span{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--bg-muted);color:var(--ink-3)}
 .pcard .ptags span.hi{background:var(--accent-soft);color:var(--accent-deep)}
@@ -233,10 +234,10 @@ img{max-width:100%}
 .pcard .pstats div{display:flex;justify-content:space-between;font-size:12.5px}
 .pcard .pstats div span{color:var(--ink-4)}
 .pcard .pstats div b{color:var(--ink);font-weight:700}
-.pcard .price{margin-top:14px;font-size:20px;font-weight:900;color:var(--accent-deep);letter-spacing:-.02em}
+.pcard .price{margin-top:14px;font-family:var(--disp);font-size:20px;font-weight:900;color:var(--accent-deep);letter-spacing:-.02em}
 .pcard .price small{font-size:12px;font-weight:600;color:var(--ink-4)}
 /* 하단 선택 바 (museby: 선택 N명 + CTA) */
-.selbar{position:fixed;left:0;right:0;bottom:0;z-index:95;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);border-top:1px solid var(--line);box-shadow:0 -8px 32px rgba(16,20,24,.08);transform:translateY(100%);transition:transform .4s cubic-bezier(.22,.7,.3,1)}
+.selbar{position:fixed;left:0;right:0;bottom:0;z-index:95;background:#fff;border-top:1px solid var(--line);box-shadow:0 -2px 12px -4px rgba(16,20,24,.08);transform:translateY(100%);transition:transform .4s cubic-bezier(.22,.7,.3,1)}
 .selbar.show{transform:none}
 .selbar-in{max-width:1120px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:20px}
 .selbar .lbl{font-size:13px;font-weight:700;color:var(--ink-3)}
@@ -294,9 +295,9 @@ img{max-width:100%}
 .plan-tier{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .ptier{background:#fff;border:1.5px solid var(--line);border-radius:var(--r);padding:34px 28px;display:flex;flex-direction:column;transition:all .3s cubic-bezier(.22,.7,.3,1);position:relative}
 .ptier:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
-.ptier.featured{border-color:var(--accent);box-shadow:0 10px 36px rgba(0,196,113,.14)}
+.ptier.featured{border-color:var(--accent)}
 .ptier.featured::before{content:'가장 많이 선택';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:11px;font-weight:800;padding:5px 16px;border-radius:99px;letter-spacing:.04em;white-space:nowrap}
-.ptier .tname{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:12px}
+.ptier .tname{font-family:var(--disp);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:12px}
 .ptier h3{font-size:21px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1.35;margin-bottom:10px}
 .ptier .tdesc{font-size:14px;color:var(--ink-3);line-height:1.65;margin-bottom:22px}
 .ptier ul{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:26px;flex:1}
@@ -334,10 +335,10 @@ img{max-width:100%}
 
 /* ============ CTA BANNER (museby: 숫자 소셜프루프) ============ */
 .cta-banner{padding:100px 0;background:var(--ink);position:relative;overflow:hidden}
-.cta-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 18% 85%,rgba(0,196,113,.16),transparent 50%),radial-gradient(circle at 85% 15%,rgba(0,196,113,.08),transparent 40%)}
+.cta-banner::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,196,113,.07),transparent 45%)}
 .cta-banner .wrap{position:relative;z-index:2;text-align:center}
 .cta-stats{display:flex;justify-content:center;gap:64px;margin-bottom:52px;flex-wrap:wrap}
-.cta-stats .st b{display:block;font-size:clamp(34px,4.2vw,50px);font-weight:900;color:#fff;letter-spacing:-.03em}
+.cta-stats .st b{display:block;font-family:var(--disp);font-size:clamp(34px,4.2vw,50px);font-weight:900;color:#fff;letter-spacing:-.03em}
 .cta-stats .st b em{font-style:normal;color:var(--accent)}
 .cta-stats .st span{font-size:13px;color:rgba(255,255,255,.5);margin-top:6px;display:block}
 .cta-banner h2{font-size:clamp(28px,3.6vw,42px);font-weight:900;color:#fff;letter-spacing:-.035em;margin-bottom:16px;line-height:1.25}
@@ -360,9 +361,17 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
 
 /* ============ FLOATING (museby: 채팅 FAB) ============ */
 .fab{position:fixed;bottom:26px;right:26px;z-index:96}
-.fab a{display:flex;align-items:center;gap:10px;background:var(--ink);color:#fff;padding:14px 24px;border-radius:99px;font-size:14px;font-weight:700;box-shadow:0 10px 36px rgba(16,20,24,.3);transition:all .25s}
-.fab a:hover{background:var(--accent-deep);transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,145,92,.35)}
+.fab a{display:flex;align-items:center;gap:10px;background:var(--ink);color:#fff;padding:14px 24px;border-radius:99px;font-size:14px;font-weight:700;box-shadow:0 4px 16px -6px rgba(16,20,24,.35);transition:all .25s}
+.fab a:hover{background:var(--accent-deep);transform:translateY(-2px);box-shadow:0 6px 18px -6px rgba(16,20,24,.3)}
 .fab.has-selbar{bottom:92px}
+
+/* ============ ICONS ============ */
+.mi{width:1em;height:1em;vertical-align:-.14em;flex:none}
+.mock-head .mi{font-size:15px;color:var(--accent-deep)}
+.flow .node .ic .mi{width:20px;height:20px}
+.step-mock .row .av .mi{width:16px;height:16px}
+.faq-search .ic .mi{width:17px;height:17px}
+.fab a .mi{width:16px;height:16px}
 
 /* ============ RESPONSIVE ============ */
 @media (max-width:960px){
@@ -430,7 +439,7 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
     <div class="hero-left">
       <div class="live-badge rv on">
         <span class="pulse"></span>
-        <span>즉시 개통 가능 회선 <b id="counter">1,284</b>개</span>
+        <span>오늘 개통 처리 <b id="counter">342</b>건</span>
       </div>
       <h1 class="rv on" data-d="1">
         3분 만에 개통하는<br>
@@ -509,7 +518,6 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
 <section class="pains">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="kicker">고민</span>
       <h2 class="sec-h2">이런 고민 해보신 적 있나요?</h2>
     </div>
     <div class="pain-grid">
@@ -529,7 +537,7 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
         <cite><b>IT 스타트업 대표</b> · 직원 15명</cite>
       </div>
     </div>
-    <p class="pain-close rv">WORK MOBILE은 이 질문들에 <b>실제 운영 데이터</b>로 답합니다.</p>
+    <p class="pain-close rv">WORK MOBILE은 이 질문들에 <b>발급·청구·회수 자동화</b>로 답합니다.</p>
   </div>
 </section>
 
@@ -537,7 +545,6 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
 <section class="features" id="features">
   <div class="wrap">
     <div class="sec-head rv" style="text-align:center;margin-bottom:8px">
-      <span class="kicker" style="justify-content:center">회선 관리 인프라</span>
       <h2 class="sec-h2">발급 × 관리 × 회수<br>업무용 회선을 한 번에</h2>
     </div>
 
@@ -553,7 +560,7 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
         </div>
       </div>
       <div class="mock">
-        <div class="mock-head">⚡ eSIM 원격 발급 <span class="tag">실시간</span></div>
+        <div class="mock-head"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> eSIM 원격 발급 <span class="tag">실시간</span></div>
         <div class="mock-body">
           <div class="qr-wrap">
             <div class="qr"></div>
@@ -579,7 +586,7 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
         </div>
       </div>
       <div class="mock">
-        <div class="mock-head">📋 부서별 비용 배분 <span class="tag">6월 청구</span></div>
+        <div class="mock-head"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4M12 16h4M8 11h.01M8 16h.01"/></svg> 부서별 비용 배분 <span class="tag">6월 청구</span></div>
         <div class="mock-body">
           <div class="bill-row"><span class="dept">영업1팀</span><span class="bar"><i data-w="82%"></i></span><span class="amt">42만원</span></div>
           <div class="bill-row"><span class="dept">영업2팀</span><span class="bar"><i data-w="74%"></i></span><span class="amt">38만원</span></div>
@@ -601,12 +608,12 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
         </div>
       </div>
       <div class="mock">
-        <div class="mock-head">🔒 퇴사 자동 회수 <span class="tag">HR 연동</span></div>
+        <div class="mock-head"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 퇴사 자동 회수 <span class="tag">HR 연동</span></div>
         <div class="mock-body">
           <div class="flow">
-            <div class="node"><div class="ic">👤</div><b>재직 중</b><small>회선 사용</small></div>
-            <div class="node hot"><div class="ic">⚙️</div><b>퇴사 처리</b><small>원클릭 정지</small></div>
-            <div class="node"><div class="ic">✅</div><b>재배정 완료</b><small>신규 입사자</small></div>
+            <div class="node"><div class="ic"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><b>재직 중</b><small>회선 사용</small></div>
+            <div class="node hot"><div class="ic"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><b>퇴사 처리</b><small>원클릭 정지</small></div>
+            <div class="node"><div class="ic"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div><b>재배정 완료</b><small>신규 입사자</small></div>
           </div>
         </div>
       </div>
@@ -618,7 +625,7 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
 <section class="grid-sec" id="plans-sec">
   <div class="wrap">
     <div class="sec-head rv">
-      <div class="live-badge"><span class="pulse"></span><span>즉시 개통 가능 요금제 <b>24</b>개</span></div>
+      <div class="live-badge"><span class="pulse"></span><span>업무용 요금제 <b>8</b>종 · 즉시 개통</span></div>
       <h2 class="sec-h2">함께할 요금제 선택하고<br>바로 개통을 시작하세요</h2>
       <p class="sec-sub">요금제를 담으면 예상 월 비용이 실시간으로 합산됩니다.</p>
     </div>
@@ -727,7 +734,6 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
 <section class="process" id="process">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="kicker" style="justify-content:center">진행 과정</span>
       <h2 class="sec-h2">개통만 하면 끝?<br>디테일은 관리 프로세스에서!</h2>
       <p class="sec-sub">관리자는 중요한 일만 신경쓰세요. 복잡한 회선 운영은 WORK MOBILE이 끝내 놓을게요.</p>
     </div>
@@ -753,10 +759,10 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
             </ul>
           </div>
           <div class="mock step-mock">
-            <div class="mock-head">📝 회선 신청서 <span class="tag">작성 완료</span></div>
+            <div class="mock-head"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> 회선 신청서 <span class="tag">작성 완료</span></div>
             <div class="mock-body">
-              <div class="row"><div class="av">🏢</div><div class="t"><b>영업1팀</b><small>신규 회선 5개 신청</small></div><span class="badge">접수됨</span></div>
-              <div class="row"><div class="av">📱</div><div class="t"><b>WORK 플러스 ×5</b><small>7GB · 음성 300분</small></div><span class="badge">확정</span></div>
+              <div class="row"><div class="av"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="1"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01M8 14h.01M16 14h.01M12 14h.01"/></svg></div><div class="t"><b>영업1팀</b><small>신규 회선 5개 신청</small></div><span class="badge">접수됨</span></div>
+              <div class="row"><div class="av"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div><div class="t"><b>WORK 플러스 ×5</b><small>7GB · 음성 300분</small></div><span class="badge">확정</span></div>
             </div>
           </div>
         </div>
@@ -773,10 +779,10 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
             </ul>
           </div>
           <div class="mock step-mock">
-            <div class="mock-head">⚡ eSIM 발급 현황 <span class="tag">실시간</span></div>
+            <div class="mock-head"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> eSIM 발급 현황 <span class="tag">실시간</span></div>
             <div class="mock-body">
-              <div class="row"><div class="av">👤</div><div class="t"><b>김대리</b><small>QR 스캔 완료 · 2분 41초</small></div><span class="badge">개통 완료</span></div>
-              <div class="row"><div class="av">👤</div><div class="t"><b>박사원</b><small>푸시 알림 발송됨</small></div><span class="badge">발급 중</span></div>
+              <div class="row"><div class="av"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="t"><b>김대리</b><small>QR 스캔 완료 · 2분 41초</small></div><span class="badge">개통 완료</span></div>
+              <div class="row"><div class="av"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="t"><b>박사원</b><small>푸시 알림 발송됨</small></div><span class="badge">발급 중</span></div>
               <div class="gauge"><div class="gl"><span>오늘 개통 완료</span><b>12 / 15 회선</b></div><div class="track"><i style="width:80%"></i></div></div>
             </div>
           </div>
@@ -794,10 +800,10 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
             </ul>
           </div>
           <div class="mock step-mock">
-            <div class="mock-head">🗂 회선 배정 대시보드 <span class="tag">42개 회선</span></div>
+            <div class="mock-head"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> 회선 배정 대시보드 <span class="tag">42개 회선</span></div>
             <div class="mock-body">
-              <div class="row"><div class="av">✅</div><div class="t"><b>배정 완료</b><small>40개 회선 · 직원 매핑됨</small></div><span class="badge">95%</span></div>
-              <div class="row"><div class="av">⚠️</div><div class="t"><b>미배정</b><small>2개 회선 · 신규입사 대기</small></div><span class="badge">알림 발송</span></div>
+              <div class="row"><div class="av"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div><div class="t"><b>배정 완료</b><small>40개 회선 · 직원 매핑됨</small></div><span class="badge">95%</span></div>
+              <div class="row"><div class="av"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div><div class="t"><b>미배정</b><small>2개 회선 · 신규입사 대기</small></div><span class="badge">알림 발송</span></div>
             </div>
           </div>
         </div>
@@ -814,7 +820,7 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
             </ul>
           </div>
           <div class="mock step-mock">
-            <div class="mock-head">🧾 6월 통합 청구서 <span class="tag">발행 완료</span></div>
+            <div class="mock-head"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg> 6월 통합 청구서 <span class="tag">발행 완료</span></div>
             <div class="mock-body">
               <table>
                 <tr><th>부서</th><th>회선</th><th>청구액</th></tr>
@@ -838,10 +844,10 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
             </ul>
           </div>
           <div class="mock step-mock">
-            <div class="mock-head">🔒 회수 리포트 <span class="tag">이번 분기</span></div>
+            <div class="mock-head"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 회수 리포트 <span class="tag">이번 분기</span></div>
             <div class="mock-body">
-              <div class="row"><div class="av">📴</div><div class="t"><b>최전임 회선 회수</b><small>퇴사 처리 즉시 정지됨</small></div><span class="badge">완료</span></div>
-              <div class="row"><div class="av">🔁</div><div class="t"><b>번호 재배정</b><small>신규 입사자에게 이전</small></div><span class="badge">완료</span></div>
+              <div class="row"><div class="av"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><path d="M12 2v10"/></svg></div><div class="t"><b>최전임 회선 회수</b><small>퇴사 처리 즉시 정지됨</small></div><span class="badge">완료</span></div>
+              <div class="row"><div class="av"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div><div class="t"><b>번호 재배정</b><small>신규 입사자에게 이전</small></div><span class="badge">완료</span></div>
               <div class="gauge"><div class="gl"><span>번호 소실</span><b>0건</b></div><div class="track"><i style="width:100%"></i></div></div>
             </div>
           </div>
@@ -856,7 +862,6 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
 <section class="plans" id="plans">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="kicker" style="justify-content:center">솔루션</span>
       <h2 class="sec-h2">조직 규모에 맞춰 선택하세요</h2>
       <p class="sec-sub">목적과 회선 수에 맞춰 최적의 플랜을 제안드립니다.</p>
     </div>
@@ -908,11 +913,10 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
 <section class="faq" id="faq">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="kicker" style="justify-content:center">자주 묻는 질문</span>
       <h2 class="sec-h2">도입 전 문의사항<br>빠르게 확인해보세요</h2>
     </div>
     <div class="faq-search rv">
-      <span class="ic">🔍</span>
+      <span class="ic"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>
       <input type="text" id="faqSearch" placeholder="예) 개통 시간, eSIM 지원 단말, 요금 정산..." aria-label="FAQ 검색">
     </div>
     <div class="faq-tabs rv">
@@ -963,11 +967,11 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
 <section class="cta-banner" id="cta">
   <div class="wrap">
     <div class="cta-stats rv">
-      <div class="st"><b><em>127</em>개</b><span>실시간 관리 회선</span></div>
-      <div class="st"><b><em>3</em>분</b><span>평균 개통 시간</span></div>
-      <div class="st"><b><em>0</em>건</b><span>번호 소실</span></div>
+      <div class="st"><b><em>3</em>분</b><span>요청부터 개통까지</span></div>
+      <div class="st"><b><em>1</em>장</b><span>전 회선 통합 청구서</span></div>
+      <div class="st"><b><em>0</em>건</b><span>퇴사자 번호 소실</span></div>
     </div>
-    <h2 class="rv" data-d="1">다음 분기 통신비 절감,<br>WORK MOBILE과 숫자로 만들어보세요</h2>
+    <h2 class="rv" data-d="1">다음 분기 통신비 절감,<br>WORK MOBILE과 시작하세요</h2>
     <p class="rv" data-d="2">초기 5개사 파일럿 파트너를 모집 중입니다.</p>
     <a href="mailto:hentol@gmail.com?subject=[WORK MOBILE] 파일럿 신청" class="btn btn-accent rv" data-d="3">파일럿 신청하기 <span class="arr">→</span></a>
   </div>
@@ -1001,7 +1005,7 @@ footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:56px 0
 
 <!-- ============ FLOATING ============ -->
 <div class="fab" id="fab">
-  <a href="mailto:hentol@gmail.com?subject=[WORK MOBILE] 도입 문의">💬 도입 문의</a>
+  <a href="mailto:hentol@gmail.com?subject=[WORK MOBILE] 도입 문의"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 도입 문의</a>
 </div>
 
 <script>
@@ -1022,12 +1026,12 @@ mnav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger.cla
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}})},{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
-// Live counter
+// Live counter — 파일럿 개통 처리량 (데모 데이터)
 const counterEl=document.getElementById('counter');
-let count=1284;
+let count=342;
 setInterval(()=>{
-  if(Math.random()>.55){count+=Math.random()>.5?1:-1;count=Math.max(1270,Math.min(1300,count));counterEl.textContent=count.toLocaleString('ko-KR')}
-},2800);
+  if(Math.random()>.6){count+=Math.random()>.5?1:-1;count=Math.max(330,Math.min(360,count));counterEl.textContent=count.toLocaleString('ko-KR')}
+},3200);
 
 // Category chips (hero)
 document.querySelectorAll('.cat-chip').forEach(chip=>{

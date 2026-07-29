@@ -11,7 +11,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A1B26'/%3E%3Crect x='7' y='17' width='4' height='8' rx='1' fill='%230FBF7F'/%3E%3Crect x='14' y='12' width='4' height='13' rx='1' fill='%230FBF7F'/%3E%3Crect x='21' y='7' width='4' height='18' rx='1' fill='%230FBF7F'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Orbit&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 /* ============ TOKENS ============ */
@@ -29,9 +29,9 @@
   --txt-3:#7A8E9A;
   --line:rgba(10,27,38,.12);
   --line-dark:rgba(246,246,242,.14);
-  --disp:'Space Grotesk','Pretendard Variable',Pretendard,sans-serif;
+  --disp:'Archivo','Pretendard Variable',Pretendard,sans-serif;
   --body:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',sans-serif;
-  --tech:'Orbit','Space Grotesk',sans-serif;
+  --tech:'IBM Plex Mono','Pretendard Variable',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -91,7 +91,7 @@ img{max-width:100%}
 /* ============ GNB ============ */
 .gnb{
   position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(246,246,242,.86);backdrop-filter:blur(14px);
+  background:var(--paper);
   border-bottom:1px solid transparent;
   transition:border-color .3s,box-shadow .3s;
 }
@@ -133,10 +133,9 @@ img{max-width:100%}
 .hero{
   padding:158px 0 96px;position:relative;overflow:hidden;
   background:
-    radial-gradient(circle at 82% 12%,rgba(15,191,127,.09),transparent 42%),
     linear-gradient(var(--line) 1px,transparent 1px),
     linear-gradient(90deg,var(--line) 1px,transparent 1px);
-  background-size:auto,52px 52px,52px 52px;
+  background-size:52px 52px,52px 52px;
 }
 .hero::after{ /* grid fade */
   content:'';position:absolute;inset:0;pointer-events:none;
@@ -151,13 +150,12 @@ img{max-width:100%}
 .hero p.sub{font-size:clamp(16px,1.6vw,19px);color:var(--txt-2);max-width:520px;margin-bottom:38px}
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
 .hero-note{margin-top:26px;display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--txt-3)}
-.hero-note .dot{width:8px;height:8px;border-radius:50%;background:var(--signal);animation:pulse 2s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(15,191,127,.5)}70%{box-shadow:0 0 0 9px rgba(15,191,127,0)}100%{box-shadow:0 0 0 0 rgba(15,191,127,0)}}
+.hero-note .dot{width:8px;height:8px;border-radius:50%;background:var(--signal)}
 
 /* console */
 .console{
   background:var(--ink);border-radius:14px;overflow:hidden;
-  box-shadow:0 30px 70px rgba(10,27,38,.28),0 2px 0 rgba(255,255,255,.06) inset;
+  box-shadow:0 1px 2px rgba(10,27,38,.25),0 14px 36px -14px rgba(10,27,38,.4),0 2px 0 rgba(255,255,255,.06) inset;
   border:1px solid rgba(255,255,255,.07);
   transform:rotate(.6deg);
   transition:transform .5s cubic-bezier(.22,.7,.3,1);
@@ -175,7 +173,7 @@ img{max-width:100%}
   margin-left:auto;font-family:var(--tech);font-size:10px;letter-spacing:.18em;color:var(--signal);
   display:flex;align-items:center;gap:6px;
 }
-.con-head .live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--signal);animation:pulse 1.6s infinite}
+.con-head .live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--signal)}
 .con-body{padding:20px;min-height:288px;display:flex;flex-direction:column;gap:11px;font-size:13.5px}
 .crow{
   display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:8px;
@@ -237,21 +235,19 @@ section{position:relative}
 .problem::before{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(circle at 12% 88%,rgba(15,191,127,.08),transparent 40%),
     linear-gradient(rgba(246,246,242,.035) 1px,transparent 1px),
     linear-gradient(90deg,rgba(246,246,242,.035) 1px,transparent 1px);
-  background-size:auto,48px 48px,48px 48px;
+  background-size:48px 48px,48px 48px;
 }
 .problem .wrap{position:relative}
 .problem h2 .dim{color:rgba(246,246,242,.42)}
 .ledger{border-top:1px solid var(--line-dark)}
 .lrow{
-  display:grid;grid-template-columns:86px 1fr 1.35fr;gap:28px;align-items:baseline;
+  display:grid;grid-template-columns:1fr 1.35fr;gap:28px;align-items:baseline;
   padding:26px 10px;border-bottom:1px solid var(--line-dark);
   transition:background .25s,padding-left .3s cubic-bezier(.22,.7,.3,1);
 }
 .lrow:hover{background:rgba(246,246,242,.04);padding-left:22px}
-.lrow .no{font-family:var(--disp);font-size:15px;font-weight:500;color:var(--amber)}
 .lrow h3{font-size:19px;font-weight:700;letter-spacing:-.01em}
 .lrow p{color:rgba(246,246,242,.55);font-size:15px}
 .hidden-demand{
@@ -326,7 +322,7 @@ section{position:relative}
 /* api mock */
 .api-mock{
   margin-top:24px;background:var(--ink);border-radius:10px;padding:18px 20px;
-  font-family:'Space Grotesk',monospace;font-size:12.5px;line-height:1.85;color:rgba(246,246,242,.75);overflow-x:auto;
+  font-family:var(--tech);font-size:12.5px;line-height:1.85;color:rgba(246,246,242,.75);overflow-x:auto;
 }
 .api-mock .g{color:var(--signal)}.api-mock .a{color:var(--amber)}.api-mock .c{color:rgba(246,246,242,.35)}
 
@@ -354,7 +350,8 @@ section{position:relative}
   background:var(--signal-dim);transform:scale(0);transition:transform .45s cubic-bezier(.22,.7,.3,1);
 }
 .p-card:hover::after{transform:scale(1)}
-.p-card .ic{font-size:26px;margin-bottom:18px;position:relative;z-index:2}
+.p-card .ic{margin-bottom:18px;position:relative;z-index:2;color:var(--ink)}
+.p-card .ic .mi{width:26px;height:26px}
 .p-card h3{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:10px;position:relative;z-index:2}
 .p-card p{font-size:14.5px;color:var(--txt-2);position:relative;z-index:2}
 .p-card .fit{
@@ -365,10 +362,6 @@ section{position:relative}
 
 /* ============ VOICES ============ */
 .voices{background:var(--ink);color:var(--paper);padding:112px 0 120px;overflow:hidden}
-.voices::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 88% 10%,rgba(15,191,127,.09),transparent 42%);
-}
 .voices .wrap{position:relative}
 .v-list{display:flex;flex-direction:column;gap:0}
 .v-row{
@@ -414,10 +407,9 @@ section{position:relative}
 .lead::before{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(circle at 15% 20%,rgba(15,191,127,.12),transparent 44%),
     linear-gradient(rgba(246,246,242,.03) 1px,transparent 1px),
     linear-gradient(90deg,rgba(246,246,242,.03) 1px,transparent 1px);
-  background-size:auto,46px 46px,46px 46px;
+  background-size:46px 46px,46px 46px;
 }
 .lead .wrap{position:relative}
 .lead-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:start}
@@ -431,7 +423,7 @@ section{position:relative}
 /* form */
 .lead-form{
   background:var(--ink-2);border:1px solid var(--line-dark);border-radius:16px;padding:40px 38px;
-  box-shadow:0 30px 70px rgba(0,0,0,.3);
+  box-shadow:0 1px 2px rgba(0,0,0,.25),0 14px 36px -14px rgba(0,0,0,.4);
 }
 .lf-title{font-family:var(--tech);font-size:12px;letter-spacing:.24em;color:var(--signal);text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:12px}
 .lf-title::after{content:'';flex:1;height:1px;background:var(--line-dark)}
@@ -465,7 +457,7 @@ section{position:relative}
 .lf-success .ck{
   width:76px;height:76px;border-radius:50%;background:var(--signal);color:var(--ink);
   display:grid;place-items:center;font-size:34px;font-weight:800;margin:0 auto 24px;
-  animation:ckPop .55s cubic-bezier(.34,1.56,.64,1) both;
+  animation:ckPop .35s cubic-bezier(.22,.7,.3,1) both;
 }
 @keyframes ckPop{from{transform:scale(0)}to{transform:scale(1)}}
 .lf-success h3{font-size:23px;font-weight:800;margin-bottom:12px}
@@ -614,12 +606,12 @@ footer{background:#071420;color:rgba(246,246,242,.5);padding:64px 0 46px;font-si
       <p>업무용 번호가 필요한데도, 개통·명의·정산·회수의 마찰 때문에 대부분의 기업이 직원 개인폰에 업무를 맡깁니다.</p>
     </div>
     <div class="ledger">
-      <div class="lrow rv"><span class="no">01</span><h3>개통 번거로움</h3><p>대면·서류 중심 개통. 신규 회선 하나에 며칠에서 몇 주가 걸립니다.</p></div>
-      <div class="lrow rv" data-d="1"><span class="no">02</span><h3>명의 혼재</h3><p>법인명의와 개인명의가 뒤섞여 누구 번호가 업무용인지 아무도 모릅니다.</p></div>
-      <div class="lrow rv" data-d="2"><span class="no">03</span><h3>비용 정산</h3><p>회선별 청구가 분산되고, 통신비 보조 정산은 매달 관리자의 수작업입니다.</p></div>
-      <div class="lrow rv" data-d="3"><span class="no">04</span><h3>입퇴사 처리</h3><p>발급·정지·회수가 전부 수동. 바쁜 달엔 누락이 당연해집니다.</p></div>
-      <div class="lrow rv" data-d="4"><span class="no">05</span><h3>번호 회수 실패</h3><p>퇴사자가 떠나면 그 번호로 연결되던 고객 연락처도 함께 사라집니다.</p></div>
-      <div class="lrow rv" data-d="5"><span class="no">06</span><h3>운영 파편화</h3><p>통신사별 별도 관리, API 없음. 회선 현황은 엑셀과 기억에 의존합니다.</p></div>
+      <div class="lrow rv"><h3>개통 번거로움</h3><p>대면·서류 중심 개통. 신규 회선 하나에 며칠에서 몇 주가 걸립니다.</p></div>
+      <div class="lrow rv" data-d="1"><h3>명의 혼재</h3><p>법인명의와 개인명의가 뒤섞여 누구 번호가 업무용인지 아무도 모릅니다.</p></div>
+      <div class="lrow rv" data-d="2"><h3>비용 정산</h3><p>회선별 청구가 분산되고, 통신비 보조 정산은 매달 관리자의 수작업입니다.</p></div>
+      <div class="lrow rv" data-d="3"><h3>입퇴사 처리</h3><p>발급·정지·회수가 전부 수동. 바쁜 달엔 누락이 당연해집니다.</p></div>
+      <div class="lrow rv" data-d="4"><h3>번호 회수 실패</h3><p>퇴사자가 떠나면 그 번호로 연결되던 고객 연락처도 함께 사라집니다.</p></div>
+      <div class="lrow rv" data-d="5"><h3>운영 파편화</h3><p>통신사별 별도 관리, API 없음. 회선 현황은 엑셀과 기억에 의존합니다.</p></div>
     </div>
     <div class="hidden-demand rv">
       <div class="big">법인회선 통계는<br><em>숨은 수요</em>를 잡지 못합니다</div>
@@ -724,25 +716,25 @@ POST <span class="g">/v1/lines</span><br>
     </div>
     <div class="p-grid">
       <div class="p-card p-6 rv">
-        <div class="ic">📞</div>
+        <div class="ic"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
         <h3>영업 조직</h3>
         <p>퇴사하는 영업사원이 고객 연락처를 들고 나갑니다. 번호가 회사 자산이어야 고객이 회사에 남습니다. 콜 기록과 후속 대응까지 연결되는 출발점이 업무용 번호입니다.</p>
         <span class="fit">B2B 영업팀 · 보험 · 부동산</span>
       </div>
       <div class="p-card p-6 rv" data-d="1">
-        <div class="ic">🏗️</div>
+        <div class="ic"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20h20"/><path d="M5 20V8l7-5 7 5v12"/><path d="M9 20v-6h6v6"/></svg></div>
         <h3>현장 인력 조직</h3>
         <p>단기 프로젝트, 계약직, 파견 인력. 입퇴사가 잦을수록 회선 발급·회수 자동화의 가치는 커집니다. 프로젝트 단위로 회선을 묶고 비용을 배분하세요.</p>
         <span class="fit">건설 · 물류 · 설치·AS 조직</span>
       </div>
       <div class="p-card p-3 rv">
-        <div class="ic">🏪</div>
+        <div class="ic"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-6h6v6"/></svg></div>
         <h3>다지점·프랜차이즈</h3>
         <p>지점별 회선을 본사에서 한눈에. 점주가 바뀌어도 번호는 브랜드에 남습니다.</p>
         <span class="fit">프랜차이즈 · 체인 본사</span>
       </div>
       <div class="p-card p-3 rv" data-d="1">
-        <div class="ic">🛵</div>
+        <div class="ic"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 4h14v12H1z"/><path d="M15 9h4l3 3v4h-7V9z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
         <h3>플랫폼·긱 조직</h3>
         <p>라이더·파트너에게 유연하게 회선을 지급하고, 계약 종료와 동시에 회수합니다.</p>
         <span class="fit">플랫폼 · 배송 · 프리랜서 풀</span>
