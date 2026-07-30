@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORK MOBILE — 업무용 회선을 소프트웨어로 운영합니다 | Mobit</title>
+<meta name="description" content="개통·청구·회수까지, 업무용 회선의 전 생애주기를 하나의 대시보드에서. eSIM 원격 발급, 통합 청구, 퇴사 자동 회수. 모빗 주식회사.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F7F6;
+  --surface:#FFFFFF;
+  --ink:#0F1A17;
+  --ink-2:#46534E;
+  --ink-3:#7C8A85;
+  --brand:#00A86B;
+  --brand-bright:#00C471;
+  --brand-soft:rgba(0,168,107,.08);
+  --amber:#D98A0C;
+  --amber-soft:rgba(217,138,12,.1);
+  --red:#D64545;
+  --red-soft:rgba(214,69,69,.09);
+  --line:#E2E6E3;
+  --line-strong:#CBD2CE;
+  --navy:#0C1613;
+  --navy-2:#12201B;
+  --navy-3:#1A2B25;
+  --navy-line:rgba(255,255,255,.09);
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --disp:'IBM Plex Sans KR','Pretendard Variable',sans-serif;
+  --body:'Pretendard Variable',Pretendard,sans-serif;
+  --ease:cubic-bezier(.22,.7,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--brand-bright);color:#fff}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono)}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
+
+/* ---------- ticker ---------- */
+.ticker{background:var(--navy);color:rgba(255,255,255,.75);font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;overflow:hidden;white-space:nowrap;border-bottom:1px solid var(--navy-line)}
+.ticker-track{display:inline-flex;gap:0;padding:8px 0;animation:tick 38s linear infinite}
+.ticker span{display:inline-flex;align-items:center;gap:8px;padding:0 26px}
+.ticker b{color:var(--brand-bright);font-weight:600}
+.ticker i{width:5px;height:5px;border-radius:50%;background:var(--brand-bright);display:inline-block;animation:pulse 1.6s infinite}
+@keyframes tick{to{transform:translateX(-50%)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:60;background:rgba(246,247,246,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:baseline;gap:9px;font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:-.02em}
+.logo em{font-style:normal;color:var(--brand)}
+.logo small{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink-3);letter-spacing:.08em;border:1px solid var(--line-strong);border-radius:4px;padding:2px 6px;transform:translateY(-2px)}
+.nav-links{display:flex;gap:34px;font-size:14.5px;font-weight:500;color:var(--ink-2)}
+.nav-links a{position:relative;transition:color .25s}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--brand);transition:width .3s var(--ease)}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14.5px;border-radius:9px;padding:11px 22px;transition:all .28s var(--ease);white-space:nowrap}
+.btn-solid{background:var(--brand);color:#fff;box-shadow:0 2px 10px -3px rgba(0,168,107,.45)}
+.btn-solid:hover{background:#00925D;transform:translateY(-2px);box-shadow:0 8px 20px -6px rgba(0,168,107,.5)}
+.btn-ghost{border:1.5px solid var(--line-strong);color:var(--ink);background:var(--surface)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand);transform:translateY(-2px)}
+.nav-cta{padding:9px 18px;font-size:13.5px}
+@media(max-width:820px){.nav-links{display:none}}
+
+/* ---------- opening console ---------- */
+.open{position:relative;padding:56px 0 72px;background:
+  radial-gradient(ellipse 70% 60% at 50% 0%,rgba(0,196,113,.07),transparent 70%),
+  var(--paper)}
+.open::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:34px 34px;opacity:.5;mask-image:radial-gradient(ellipse 80% 70% at 50% 30%,#000 30%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 30%,#000 30%,transparent 80%);pointer-events:none}
+.open .wrap{position:relative}
+.console{background:var(--surface);border:1px solid var(--line-strong);border-radius:16px;box-shadow:0 30px 70px -30px rgba(15,26,23,.25),0 2px 8px rgba(15,26,23,.05);overflow:hidden}
+.console-bar{display:flex;align-items:center;gap:14px;background:var(--navy);padding:13px 20px;border-bottom:1px solid var(--navy-line)}
+.dots{display:flex;gap:7px}
+.dots i{width:11px;height:11px;border-radius:50%}
+.dots i:nth-child(1){background:#FF5F57}.dots i:nth-child(2){background:#FEBC2E}.dots i:nth-child(3){background:#28C840}
+.console-title{font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.65);letter-spacing:.05em;flex:1;text-align:center}
+.console-title b{color:#fff;font-weight:600}
+.live{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--brand-bright);letter-spacing:.1em}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--brand-bright);animation:pulse 1.4s infinite;box-shadow:0 0 8px var(--brand-bright)}
+.console-body{display:grid;grid-template-columns:1.15fr .85fr;min-height:440px}
+@media(max-width:900px){.console-body{grid-template-columns:1fr}}
+
+/* pitch side */
+.pitch{padding:44px 48px 38px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--brand);letter-spacing:.14em;display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.eyebrow::before{content:'';width:26px;height:1.5px;background:var(--brand)}
+.pitch h1{font-family:var(--disp);font-size:clamp(34px,4.4vw,52px);font-weight:700;line-height:1.18;letter-spacing:-.035em;margin-bottom:22px}
+.pitch h1 em{font-style:normal;color:var(--brand);position:relative}
+.pitch h1 em::after{content:'';position:absolute;left:0;bottom:4px;width:100%;height:9px;background:var(--brand-soft);z-index:-1;border-radius:2px}
+.pitch .lede{font-size:16px;color:var(--ink-2);line-height:1.7;max-width:480px;margin-bottom:26px}
+.pitch .lede b{color:var(--ink);font-weight:600}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:32px}
+.btn-lg{padding:15px 30px;font-size:15.5px;border-radius:11px}
+.proof{display:flex;gap:0;border-top:1px solid var(--line);padding-top:20px}
+.proof div{flex:1;padding-right:20px}
+.proof div+div{border-left:1px solid var(--line);padding-left:24px}
+.proof .num{font-family:var(--mono);font-size:clamp(22px,2.4vw,28px);font-weight:600;color:var(--ink);letter-spacing:-.02em}
+.proof .num small{font-size:.55em;color:var(--brand);font-weight:600;margin-left:2px}
+.proof .lab{font-size:12.5px;color:var(--ink-3);margin-top:3px}
+@media(max-width:640px){.proof{flex-direction:column;gap:16px}.proof div+div{border-left:none;padding-left:0;border-top:1px solid var(--line);padding-top:16px}}
+
+/* feed side */
+.feed{background:var(--navy);border-left:1px solid var(--navy-line);display:flex;flex-direction:column;position:relative;overflow:hidden}
+@media(max-width:900px){.feed{border-left:none;border-top:1px solid var(--navy-line)}}
+.feed::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:26px 26px;pointer-events:none}
+.feed-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--navy-line);position:relative}
+.feed-head .t{font-family:var(--mono);font-size:11.5px;font-weight:600;color:rgba(255,255,255,.7);letter-spacing:.12em}
+.feed-head .clk{font-family:var(--mono);font-size:11.5px;color:var(--brand-bright)}
+.feed-list{flex:1;padding:16px 20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(#000 82%,transparent 100%);mask-image:linear-gradient(#000 82%,transparent 100%)}
+.fitem{background:var(--navy-2);border:1px solid var(--navy-line);border-left:3px solid var(--brand-bright);border-radius:9px;padding:13px 16px;animation:slidein .55s var(--ease) both}
+.fitem.warn{border-left-color:var(--amber)}
+.fitem.info{border-left-color:#4C8DA6}
+.fitem.done{border-left-color:rgba(255,255,255,.22)}
+@keyframes slidein{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+.fitem .top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:5px}
+.fitem .who{font-size:13.5px;font-weight:600;color:#fff}
+.fitem .who small{font-weight:400;color:rgba(255,255,255,.58);font-size:12px;margin-left:6px}
+.fitem .st{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.st.ok{background:rgba(0,196,113,.15);color:var(--brand-bright)}
+.st.wait{background:var(--amber-soft);color:#F0B45A}
+.st.proc{background:rgba(76,141,166,.16);color:#7FB6CC}
+.st.off{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6)}
+.fitem .meta{font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.62)}
+.feed-foot{border-top:1px solid var(--navy-line);padding:15px 24px;display:flex;gap:26px;position:relative}
+.feed-foot div .v{font-family:var(--mono);font-size:17px;font-weight:600;color:#fff}
+.feed-foot div .v b{color:var(--brand-bright)}
+.feed-foot div .k{font-size:11px;color:rgba(255,255,255,.4);margin-top:1px}
+
+/* ---------- section common ---------- */
+section{padding:96px 0}
+.sec-eyebrow{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.16em;color:var(--brand);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-eyebrow::before{content:'';width:26px;height:1.5px;background:var(--brand)}
+h2.sec-title{font-family:var(--disp);font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.03em;line-height:1.25;margin-bottom:16px}
+.sec-sub{font-size:16px;color:var(--ink-2);max-width:560px;line-height:1.75}
+
+/* ---------- incidents ---------- */
+.incidents{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.inc-list{margin-top:52px;display:flex;flex-direction:column;gap:0;border:1px solid var(--line-strong);border-radius:14px;overflow:hidden;background:var(--paper)}
+.inc{display:grid;grid-template-columns:110px 1fr auto;gap:28px;align-items:center;padding:30px 34px;background:var(--surface);transition:background .3s;position:relative}
+.inc+.inc{border-top:1px solid var(--line)}
+.inc:hover{background:#FBFCFB}
+.inc .sev{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em;padding:5px 0;text-align:center;border-radius:6px}
+.sev.crit{background:var(--red-soft);color:var(--red)}
+.sev.warn{background:var(--amber-soft);color:var(--amber)}
+.sev.info{background:var(--brand-soft);color:var(--brand)}
+.inc .body h3{font-family:var(--disp);font-size:18.5px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
+.inc .body h3 .time{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--ink-3);margin-right:10px}
+.inc .body p{font-size:14px;color:var(--ink-2)}
+.inc .body p b{color:var(--ink);font-weight:600}
+.inc .src{font-size:12.5px;color:var(--ink-3);text-align:right;line-height:1.5;white-space:nowrap}
+.inc .src b{display:block;color:var(--ink-2);font-weight:600}
+.inc-resolve{margin-top:34px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.inc-resolve .arrow{font-family:var(--mono);color:var(--brand);font-size:18px}
+.inc-resolve p{font-size:16.5px;color:var(--ink)}
+.inc-resolve p b{color:var(--brand);font-weight:700}
+@media(max-width:760px){.inc{grid-template-columns:1fr;gap:12px}.inc .src{text-align:left}}
+
+/* ---------- lifecycle (dark) ---------- */
+.lifecycle{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+.lifecycle::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:34px 34px;mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,#000,transparent);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,#000,transparent)}
+.lifecycle .wrap{position:relative}
+.lifecycle .sec-eyebrow{color:var(--brand-bright)}
+.lifecycle .sec-eyebrow::before{background:var(--brand-bright)}
+.lifecycle .sec-sub{color:rgba(255,255,255,.6)}
+.pipe{display:flex;gap:0;margin-top:56px;position:relative}
+.pipe::before{content:'';position:absolute;top:26px;left:5%;right:5%;height:2px;background:var(--navy-3)}
+.pnode{flex:1;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;z-index:1;cursor:pointer;padding:0 6px}
+.pnode .dot{width:52px;height:52px;border-radius:14px;background:var(--navy-2);border:1.5px solid var(--navy-3);display:grid;place-items:center;font-family:var(--mono);font-size:15px;font-weight:600;color:rgba(255,255,255,.4);transition:all .35s var(--ease)}
+.pnode .plab{margin-top:14px;font-size:14px;font-weight:600;color:rgba(255,255,255,.45);transition:color .3s;text-align:center}
+.pnode .psub{font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,.28);letter-spacing:.08em;margin-top:3px}
+.pnode:hover .dot{border-color:rgba(0,196,113,.5);color:var(--brand-bright);transform:translateY(-3px)}
+.pnode.active .dot{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:0 0 0 6px rgba(0,168,107,.18),0 8px 24px -6px rgba(0,168,107,.5);transform:translateY(-3px)}
+.pnode.active .plab{color:#fff}
+.pnode.active .psub{color:var(--brand-bright)}
+.pdetail{margin-top:48px;background:var(--navy-2);border:1px solid var(--navy-line);border-radius:16px;padding:44px;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;animation:fadeup .5s var(--ease)}
+@keyframes fadeup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.pdetail .step-tag{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--brand-bright);letter-spacing:.14em;margin-bottom:14px}
+.pdetail h3{font-family:var(--disp);font-size:clamp(22px,2.6vw,28px);font-weight:700;letter-spacing:-.025em;line-height:1.3;margin-bottom:14px}
+.pdetail p{font-size:15px;color:rgba(255,255,255,.62);line-height:1.75;margin-bottom:24px}
+.pchips{display:flex;flex-wrap:wrap;gap:9px}
+.pchips span{font-size:12.5px;font-weight:500;color:rgba(255,255,255,.75);border:1px solid var(--navy-3);border-radius:7px;padding:7px 13px;background:var(--navy-3)}
+.pstats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pstat{background:var(--navy-3);border:1px solid var(--navy-line);border-radius:12px;padding:22px 20px;transition:transform .3s var(--ease),border-color .3s}
+.pstat:hover{transform:translateY(-3px);border-color:rgba(0,196,113,.4)}
+.pstat .v{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--brand-bright);letter-spacing:-.02em}
+.pstat .k{font-size:12.5px;color:rgba(255,255,255,.5);margin-top:5px;line-height:1.5}
+.plog{grid-column:1/-1;font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.42);background:var(--navy);border:1px solid var(--navy-line);border-radius:9px;padding:14px 18px;overflow-x:auto;white-space:nowrap}
+.plog b{color:var(--brand-bright);font-weight:500}
+@media(max-width:860px){.pdetail{grid-template-columns:1fr;padding:32px}.pipe{flex-wrap:wrap;gap:18px;justify-content:center}.pipe::before{display:none}.pnode{flex:0 0 30%}}
+
+/* ---------- trust band ---------- */
+.trust{background:var(--surface);border-bottom:1px solid var(--line);padding:0}
+.trust-in{display:flex;align-items:stretch;justify-content:space-between;gap:0;flex-wrap:wrap}
+.trust-item{flex:1;min-width:220px;padding:34px 30px;border-left:1px solid var(--line);display:flex;gap:16px;align-items:flex-start;transition:background .3s}
+.trust-item:first-child{border-left:none}
+.trust-item:hover{background:#FBFCFB}
+.trust-item .ic{width:40px;height:40px;border-radius:10px;background:var(--brand-soft);display:grid;place-items:center;flex-shrink:0;font-size:18px}
+.trust-item b{display:block;font-size:14.5px;font-weight:600;margin-bottom:3px}
+.trust-item span{font-size:12.5px;color:var(--ink-3);line-height:1.55}
+@media(max-width:820px){.trust-item{border-left:none;border-top:1px solid var(--line);flex:1 1 100%}.trust-item:first-child{border-top:none}}
+
+/* ---------- pricing ---------- */
+.pricing{background:var(--paper)}
+.price-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.filters{display:flex;gap:9px;flex-wrap:wrap}
+.fchip{font-size:13px;font-weight:600;color:var(--ink-2);border:1.5px solid var(--line-strong);border-radius:20px;padding:8px 18px;background:var(--surface);transition:all .25s var(--ease)}
+.fchip:hover{border-color:var(--brand);color:var(--brand);transform:translateY(-1px)}
+.fchip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.plan-grid{margin-top:44px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:1020px){.plan-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.plan-grid{grid-template-columns:1fr}}
+.plan{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:24px 22px;cursor:pointer;position:relative;transition:all .3s var(--ease);display:flex;flex-direction:column}
+.plan:hover{transform:translateY(-4px);border-color:var(--line-strong);box-shadow:0 14px 30px -16px rgba(15,26,23,.2)}
+.plan.sel{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft),0 14px 30px -16px rgba(0,168,107,.3)}
+.plan .tag{position:absolute;top:-10px;right:16px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;background:var(--brand);color:#fff;border-radius:5px;padding:3px 9px;opacity:0;transform:translateY(4px);transition:all .3s var(--ease)}
+.plan.sel .tag{opacity:1;transform:none}
+.plan .badge{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--brand);background:var(--brand-soft);border-radius:5px;padding:3px 8px;display:inline-block;width:fit-content;margin-bottom:12px}
+.plan .badge.alt{color:var(--amber);background:var(--amber-soft)}
+.plan h3{font-family:var(--disp);font-size:17px;font-weight:700;letter-spacing:-.02em;margin-bottom:4px}
+.plan .desc{font-size:12px;color:var(--ink-3);margin-bottom:18px}
+.plan .spec{display:flex;gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:18px}
+.plan .spec div{flex:1;padding:10px 0;text-align:center}
+.plan .spec div+div{border-left:1px solid var(--line)}
+.plan .spec .v{font-family:var(--mono);font-size:14px;font-weight:600}
+.plan .spec .k{font-size:10.5px;color:var(--ink-3);margin-top:1px}
+.plan .price{margin-top:auto;display:flex;align-items:baseline;gap:4px}
+.plan .price .won{font-family:var(--mono);font-size:24px;font-weight:600;letter-spacing:-.02em}
+.plan .price .per{font-size:12px;color:var(--ink-3)}
+.plan .check{position:absolute;top:20px;right:20px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line-strong);display:grid;place-items:center;font-size:11px;color:transparent;transition:all .25s var(--ease)}
+.plan.sel .check{background:var(--brand);border-color:var(--brand);color:#fff}
+/* selection bar */
+.selbar{position:sticky;bottom:20px;margin-top:34px;background:var(--ink);color:#fff;border-radius:14px;padding:18px 26px;display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 20px 44px -18px rgba(15,26,23,.5);transform:translateY(20px);opacity:0;pointer-events:none;transition:all .4s var(--ease);z-index:40}
+.selbar.show{transform:none;opacity:1;pointer-events:auto}
+.selbar .info{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.selbar .cnt{font-size:14px;color:rgba(255,255,255,.65)}
+.selbar .cnt b{color:#fff;font-family:var(--mono)}
+.selbar .total{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--brand-bright)}
+.selbar .total small{font-size:12px;color:rgba(255,255,255,.5);font-weight:400;margin-left:4px}
+.selbar .btn-solid{background:var(--brand-bright);color:var(--navy)}
+.selbar .btn-solid:hover{background:#fff}
+
+/* ---------- tiers ---------- */
+.tiers{background:var(--surface);border-top:1px solid var(--line)}
+.tier-grid{margin-top:52px;display:grid;grid-template-columns:1.25fr .75fr;gap:18px}
+@media(max-width:860px){.tier-grid{grid-template-columns:1fr}}
+.tier{border:1.5px solid var(--line);border-radius:16px;padding:36px 34px;position:relative;transition:all .35s var(--ease);background:var(--paper)}
+.tier:hover{transform:translateY(-4px);box-shadow:0 18px 40px -20px rgba(15,26,23,.22)}
+.tier.feat{background:var(--navy);color:#fff;border-color:var(--navy);display:flex;flex-direction:column}
+.tier.feat::before{content:'추천';position:absolute;top:-11px;left:34px;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;background:var(--brand-bright);color:var(--navy);border-radius:5px;padding:4px 12px}
+.tier .tname{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.16em;color:var(--brand);margin-bottom:12px}
+.tier.feat .tname{color:var(--brand-bright)}
+.tier h3{font-family:var(--disp);font-size:24px;font-weight:700;letter-spacing:-.025em;margin-bottom:8px}
+.tier .tdesc{font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:24px;max-width:400px}
+.tier.feat .tdesc{color:rgba(255,255,255,.6)}
+.tier ul{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:30px}
+.tier li{font-size:14px;display:flex;align-items:flex-start;gap:10px;color:var(--ink-2)}
+.tier.feat li{color:rgba(255,255,255,.75)}
+.tier li::before{content:'✓';color:var(--brand);font-weight:700;font-size:13px;margin-top:1px}
+.tier.feat li::before{color:var(--brand-bright)}
+.tier .tprice{margin-top:auto;display:flex;align-items:baseline;gap:8px;padding-top:22px;border-top:1px solid var(--line)}
+.tier.feat .tprice{border-top-color:var(--navy-3)}
+.tier .tprice .from{font-size:12.5px;color:var(--ink-3)}
+.tier.feat .tprice .from{color:rgba(255,255,255,.45)}
+.tier .tprice .amt{font-family:var(--mono);font-size:30px;font-weight:600;letter-spacing:-.02em}
+.tier.feat .tprice .amt{color:var(--brand-bright)}
+.tier .tprice .unit{font-size:12.5px;color:var(--ink-3)}
+.tier.feat .tprice .unit{color:rgba(255,255,255,.45)}
+.tier-side{display:flex;flex-direction:column;gap:18px}
+.tier-side .tier{flex:1;display:flex;flex-direction:column}
+
+/* ---------- faq ---------- */
+.faq{background:var(--paper)}
+.faq-tabs{display:flex;gap:9px;flex-wrap:wrap;margin-top:40px;margin-bottom:26px}
+.faq-list{display:flex;flex-direction:column;gap:12px;max-width:820px}
+.qa{background:var(--surface);border:1.5px solid var(--line);border-radius:13px;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.qa.open{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+.qa button.q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 26px;text-align:left;font-size:15.5px;font-weight:600;font-family:var(--disp);letter-spacing:-.01em;color:var(--ink)}
+.qa .q .cat{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--ink-3);border:1px solid var(--line);border-radius:5px;padding:3px 8px;flex-shrink:0}
+.qa .q .plus{font-size:20px;font-weight:400;color:var(--brand);transition:transform .35s var(--ease);flex-shrink:0;line-height:1}
+.qa.open .plus{transform:rotate(45deg)}
+.qa .a{max-height:0;overflow:hidden;transition:max-height .45s var(--ease)}
+.qa .a p{padding:0 26px 24px;font-size:14.5px;color:var(--ink-2);line-height:1.8}
+.qa .a b{color:var(--ink);font-weight:600}
+
+/* ---------- final cta ---------- */
+.final{background:var(--navy);color:#fff;position:relative;overflow:hidden;text-align:left}
+.final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 80% 50%,rgba(0,168,107,.14),transparent 70%)}
+.final .wrap{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:center}
+@media(max-width:860px){.final .wrap{grid-template-columns:1fr;gap:40px}}
+.final h2{font-family:var(--disp);font-size:clamp(30px,3.8vw,44px);font-weight:700;letter-spacing:-.035em;line-height:1.25;margin-bottom:18px}
+.final h2 em{font-style:normal;color:var(--brand-bright)}
+.final p{font-size:16px;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:34px;max-width:460px}
+.final .cta-row{margin-bottom:0}
+.final .btn-ghost{background:transparent;border-color:rgba(255,255,255,.25);color:#fff}
+.final .btn-ghost:hover{border-color:var(--brand-bright);color:var(--brand-bright)}
+.final-panel{background:var(--navy-2);border:1px solid var(--navy-line);border-radius:16px;padding:34px}
+.final-panel .fp-title{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.14em;color:rgba(255,255,255,.5);margin-bottom:24px}
+.fp-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--navy-line)}
+.fp-row:last-child{border-bottom:none}
+.fp-row .k{font-size:13.5px;color:rgba(255,255,255,.6)}
+.fp-row .v{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--brand-bright)}
+.fp-row .v.dim{color:rgba(255,255,255,.45)}
+
+/* ---------- footer ---------- */
+footer{background:var(--navy);border-top:1px solid var(--navy-line);padding:44px 0 52px;color:rgba(255,255,255,.45)}
+.foot-in{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.foot-brand .logo{color:#fff;margin-bottom:14px}
+.foot-brand p{font-size:12.5px;line-height:1.8;max-width:340px}
+.foot-links{display:flex;gap:56px;flex-wrap:wrap}
+.foot-links h4{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;color:rgba(255,255,255,.35);margin-bottom:16px}
+.foot-links a{display:block;font-size:13.5px;color:rgba(255,255,255,.55);margin-bottom:10px;transition:color .25s}
+.foot-links a:hover{color:var(--brand-bright)}
+.foot-legal{margin-top:40px;padding-top:24px;border-top:1px solid var(--navy-line);font-size:11.5px;line-height:1.9;color:rgba(255,255,255,.32)}
+.foot-legal b{color:rgba(255,255,255,.5);font-weight:500}
+</style>
+</head>
+<body>
+
+<!-- ticker -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="tickerTrack">
+    <span><i></i> SYS.NOMINAL</span><span>오늘 개통 <b>342</b>건</span><span>평균 개통 <b>2분 58초</b></span><span>활성 회선 <b>12,847</b></span><span>회수 대기 <b>0</b>건</span><span>통합 청구서 발행 <b>D-3</b></span>
+    <span><i></i> SYS.NOMINAL</span><span>오늘 개통 <b>342</b>건</span><span>평균 개통 <b>2분 58초</b></span><span>활성 회선 <b>12,847</b></span><span>회수 대기 <b>0</b>건</span><span>통합 청구서 발행 <b>D-3</b></span>
+  </div>
+</div>
+
+<!-- nav -->
+<nav>
+  <div class="wrap nav-in">
+    <a class="logo" href="#top">WORK<em>MOBILE</em><small>BY MOBIT</small></a>
+    <div class="nav-links">
+      <a href="#lifecycle">작동 방식</a>
+      <a href="#pricing">요금제</a>
+      <a href="#tiers">도입 플랜</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-solid nav-cta" href="#cta">파일럿 신청</a>
+  </div>
+</nav>
+
+<!-- opening console -->
+<section class="open" id="top">
+  <div class="wrap">
+    <div class="console rv">
+      <div class="console-bar">
+        <div class="dots"><i></i><i></i><i></i></div>
+        <div class="console-title"><b>WORK MOBILE</b> — 회선 관제 콘솔</div>
+        <div class="live"><i></i>LIVE</div>
+      </div>
+      <div class="console-body">
+        <div class="pitch">
+          <div class="eyebrow">업무용 회선 운영 인프라</div>
+          <h1>업무용 회선을<br><em>소프트웨어</em>로<br>운영합니다</h1>
+          <p class="lede">개통·청구·회수까지, 회선의 전 생애주기를 하나의 대시보드에서. 서류도, 방문도, 배송 대기 없이 <b>eSIM 원격 발급으로 3분 만에</b> 개통이 끝납니다.</p>
+          <div class="cta-row">
+            <a class="btn btn-solid btn-lg" href="#cta">파일럿 신청하기 →</a>
+            <a class="btn btn-ghost btn-lg" href="#lifecycle">작동 방식 보기</a>
+          </div>
+          <div class="proof">
+            <div><div class="num" data-count="3">0<small>분</small></div><div class="lab">요청부터 개통까지</div></div>
+            <div><div class="num" data-count="0">0<small>건</small></div><div class="lab">퇴사자 번호 유출</div></div>
+            <div><div class="num" data-count="1">0<small>장</small></div><div class="lab">전 회선 통합 청구서</div></div>
+          </div>
+        </div>
+        <div class="feed">
+          <div class="feed-head">
+            <span class="t">LINE-OPS · 실시간 회선 이벤트</span>
+            <span class="clk" id="clock">--:--:--</span>
+          </div>
+          <div class="feed-list" id="feedList"></div>
+          <div class="feed-foot">
+            <div><div class="v"><b id="fActive">42</b></div><div class="k">활성 회선</div></div>
+            <div><div class="v" id="fToday">12</div><div class="k">오늘 개통</div></div>
+            <div><div class="v" id="fAvg">2:58</div><div class="k">평균 개통</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- incidents -->
+<section class="incidents" id="incidents">
+  <div class="wrap">
+    <div class="sec-eyebrow rv">INCIDENT LOG</div>
+    <h2 class="sec-title rv d1">이런 사고,<br>실제로 일어납니다</h2>
+    <p class="sec-sub rv d2">회선을 사람 손으로 운영하면, 아래 이벤트는 언젠가 반드시 로그에 찍힙니다.</p>
+    <div class="inc-list rv d2">
+      <div class="inc">
+        <div class="sev crit">CRIT</div>
+        <div class="body">
+          <h3><span class="time">09:41</span>영업사원 퇴사, 고객 연락처가 함께 사라짐</h3>
+          <p>개인 명의로 개통한 회선이라 <b>번호 소유권이 직원에게 있음</b>. 퇴사와 동시에 2,300건의 고객 접점이 유출됨. 회수 불가.</p>
+        </div>
+        <div class="src"><b>제조업 영업팀장</b>직원 40명</div>
+      </div>
+      <div class="inc">
+        <div class="sev warn">WARN</div>
+        <div class="body">
+          <h3><span class="time">11:05</span>신규 인력 200명, 각자 선불 유심 개통 중</h3>
+          <p>현장 투입마다 <b>개인 명의 선불 유심</b>을 구매·개통. 명의 관리 불가, 비용 정산 불가, 퇴사 시 자동 소멸.</p>
+        </div>
+        <div class="src"><b>플랫폼 운영 매니저</b>현장 인력 200명</div>
+      </div>
+      <div class="inc">
+        <div class="sev info">INFO</div>
+        <div class="body">
+          <h3><span class="time">14:22</span>통신비 보조금 지급, 업무 사용 여부 확인 불가</h3>
+          <p>인당 월 5만원 보조. <b>실제 업무에 쓰이는지 검증할 데이터가 없음</b>. 비용은 나가는데 가시성은 0.</p>
+        </div>
+        <div class="src"><b>IT 스타트업 대표</b>직원 15명</div>
+      </div>
+    </div>
+    <div class="inc-resolve rv d3">
+      <span class="arrow">↓</span>
+      <p>WORK MOBILE은 이 세 이벤트의 <b>발생 조건 자체를 제거</b>합니다. 발급·청구·회수를 자동화해서요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- lifecycle -->
+<section class="lifecycle" id="lifecycle">
+  <div class="wrap">
+    <div class="sec-eyebrow rv">LIFECYCLE PIPELINE</div>
+    <h2 class="sec-title rv d1">회선 생애주기,<br>처음부터 끝까지 자동으로</h2>
+    <p class="sec-sub rv d2">신청부터 회수까지 5단계. 각 단계를 클릭해 확인하세요.</p>
+
+    <div class="pipe rv d2" id="pipe">
+      <div class="pnode" data-step="0"><div class="dot">01</div><div class="plab">신청</div><div class="psub">REQUEST</div></div>
+      <div class="pnode active" data-step="1"><div class="dot">02</div><div class="plab">발급</div><div class="psub">PROVISION</div></div>
+      <div class="pnode" data-step="2"><div class="dot">03</div><div class="plab">배정</div><div class="psub">ASSIGN</div></div>
+      <div class="pnode" data-step="3"><div class="dot">04</div><div class="plab">청구</div><div class="psub">BILLING</div></div>
+      <div class="pnode" data-step="4"><div class="dot">05</div><div class="plab">회수</div><div class="psub">RECLAIM</div></div>
+    </div>
+
+    <div class="pdetail" id="pdetail"></div>
+  </div>
+</section>
+
+<!-- trust band -->
+<div class="trust">
+  <div class="wrap trust-in">
+    <div class="trust-item rv"><div class="ic">🔒</div><div><b>번호 소유권은 회사에</b><span>전 회선 법인 명의. 퇴사해도 번호와 고객 접점은 남습니다.</span></div></div>
+    <div class="trust-item rv d1"><div class="ic">🛡️</div><div><b>사용 데이터 암호화</b><span>회선·임직원 정보는 전송·보관 전 구간 암호화됩니다.</span></div></div>
+    <div class="trust-item rv d2"><div class="ic">📄</div><div><b>감사 로그 전체 보관</b><span>발급·배정·회수 모든 이벤트가 타임스탬프로 기록됩니다.</span></div></div>
+    <div class="trust-item rv d3"><div class="ic">⚡</div><div><b>통신사 정식 회선</b><span>별도 망이 아닌, 통신사 정식 회선을 소프트웨어로 운영합니다.</span></div></div>
+  </div>
+</div>
+
+<!-- pricing -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="price-head">
+      <div>
+        <div class="sec-eyebrow rv">RATE CARD</div>
+        <h2 class="sec-title rv d1">업무용 요금제</h2>
+        <p class="sec-sub rv d2">요금제를 클릭하면 예상 월 비용이 실시간으로 합산됩니다.</p>
+      </div>
+      <div class="filters rv d2" id="filters">
+        <button class="fchip active" data-f="all">전체</button>
+        <button class="fchip" data-f="data">데이터 중심</button>
+        <button class="fchip" data-f="voice">통화 중심</button>
+        <button class="fchip" data-f="unlim">무제한</button>
+        <button class="fchip" data-f="lite">저가형</button>
+      </div>
+    </div>
+    <div class="plan-grid" id="planGrid"></div>
+    <div class="selbar" id="selbar">
+      <div class="info">
+        <span class="cnt"><b id="selCnt">0</b>개 요금제 선택</span>
+        <span class="total"><span id="selTotal">0</span>원<small>/월 · 회선당</small></span>
+      </div>
+      <a class="btn btn-solid" href="#cta">선택한 요금제로 상담하기</a>
+    </div>
+  </div>
+</section>
+
+<!-- tiers -->
+<section class="tiers" id="tiers">
+  <div class="wrap">
+    <div class="sec-eyebrow rv">DEPLOYMENT PLAN</div>
+    <h2 class="sec-title rv d1">조직 규모에 맞춰 시작하세요</h2>
+    <p class="sec-sub rv d2">회선 수와 운영 성숙도에 따라 플랜을 선택합니다. 모든 플랜은 파일럿으로 검증 후 전환할 수 있습니다.</p>
+    <div class="tier-grid">
+      <div class="tier feat rv">
+        <div class="tname">BUSINESS</div>
+        <h3>본격적인 회선 자산화</h3>
+        <p class="tdesc">30~200회선 조직을 위한 완전한 회선 운영 인프라. HR 연동과 자동 회수로 회선을 진짜 회사 자산으로 만듭니다.</p>
+        <ul>
+          <li>HR 연동 자동 배정 · 퇴사 자동 회수</li>
+          <li>부서별 · 프로젝트별 비용 배분 리포트</li>
+          <li>API 연동 · 전담 매니저 배정</li>
+          <li>비정상 사용 패턴 실시간 알림</li>
+        </ul>
+        <div class="tprice"><span class="from">월</span><span class="amt">30만원</span><span class="unit">부터 · 관리 수수료 포함</span></div>
+      </div>
+      <div class="tier-side">
+        <div class="tier rv d1">
+          <div class="tname">STARTER</div>
+          <h3>회선 관리의 시작</h3>
+          <p class="tdesc">10~30회선 소규모 팀이 부담 없이 시작하는 기본 플랜.</p>
+          <ul><li>eSIM 원격 발급 · 통합 청구서</li><li>기본 회선 대시보드</li></ul>
+          <div class="tprice"><span class="from">월</span><span class="amt">10만원</span><span class="unit">부터</span></div>
+        </div>
+        <div class="tier rv d2">
+          <div class="tname">ENTERPRISE</div>
+          <h3>멀티 법인 통합 관리</h3>
+          <p class="tdesc">200회선 이상 대규모 조직을 위한 맞춤 설계.</p>
+          <ul><li>커스텀 SLA · 전용 인프라</li><li>보안 · 컴플라이언스 대응</li></ul>
+          <div class="tprice"><span class="amt" style="font-size:22px">별도 협의</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- faq -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="sec-eyebrow rv">FAQ</div>
+    <h2 class="sec-title rv d1">도입 전, 가장 많이 묻는 질문</h2>
+    <div class="faq-tabs rv d2" id="faqTabs">
+      <button class="fchip active" data-f="all">전체</button>
+      <button class="fchip" data-f="bill">요금 · 청구</button>
+      <button class="fchip" data-f="dev">개통 · 단말</button>
+      <button class="fchip" data-f="sec">보안 · 회수</button>
+      <button class="fchip" data-f="deal">도입 · 계약</button>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- final cta -->
+<section class="final" id="cta">
+  <div class="wrap">
+    <div>
+      <div class="sec-eyebrow rv" style="color:var(--brand-bright)">PILOT PROGRAM</div>
+      <h2 class="rv d1">다음 분기 통신비 절감,<br><em>WORK MOBILE</em>과 시작하세요</h2>
+      <p class="rv d2">초기 5개사 파일럿 파트너를 모집 중입니다. 파일럿 기간 관리 수수료가 면제되며, 확정 전까지 무료 취소가 가능합니다.</p>
+      <div class="cta-row rv d3">
+        <a class="btn btn-solid btn-lg" href="mailto:contact@mobit.kr?subject=[WORK MOBILE] 파일럿 신청">파일럿 신청하기 →</a>
+        <a class="btn btn-ghost btn-lg" href="mailto:contact@mobit.kr?subject=[WORK MOBILE] 도입 문의">도입 문의</a>
+      </div>
+    </div>
+    <div class="final-panel rv d2">
+      <div class="fp-title">PILOT — 현재 상태</div>
+      <div class="fp-row"><span class="k">모집 규모</span><span class="v">5개사</span></div>
+      <div class="fp-row"><span class="k">우선 대상</span><span class="v dim">10~200회선 조직</span></div>
+      <div class="fp-row"><span class="k">관리 수수료</span><span class="v">파일럿 기간 면제</span></div>
+      <div class="fp-row"><span class="k">온보딩</span><span class="v dim">전담 매니저 배정</span></div>
+      <div class="fp-row"><span class="k">취소 정책</span><span class="v">확정 전 무료 취소</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- footer -->
+<footer>
+  <div class="wrap">
+    <div class="foot-in">
+      <div class="foot-brand">
+        <div class="logo">WORK<em>MOBILE</em></div>
+        <p>업무용 회선의 전 생애주기를 소프트웨어로 운영하는 회선 운영 인프라. 모빗 주식회사가 만듭니다.</p>
+      </div>
+      <div class="foot-links">
+        <div>
+          <h4>PRODUCT</h4>
+          <a href="#lifecycle">작동 방식</a><a href="#pricing">요금제</a><a href="#tiers">도입 플랜</a><a href="#faq">FAQ</a>
+        </div>
+        <div>
+          <h4>COMPANY</h4>
+          <a href="mailto:contact@mobit.kr">도입 문의</a><a href="#">개인정보처리방침</a><a href="#">이용약관</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <b>모빗 주식회사</b> · 대표 윤이삭 · 사업자등록번호 812-88-04090<br>
+      경기 용인시 수지구 풍덕천동 문인로17번길 5 304호 · contact@mobit.kr<br>
+      © 2026 Mobit Inc. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- clock ---------- */
+function tickClock(){const d=new Date();const p=n=>String(n).padStart(2,'0');const el=document.getElementById('clock');if(el)el.textContent=p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());}
+setInterval(tickClock,1000);tickClock();
+
+/* ---------- live feed ---------- */
+const EVENTS=[
+ {who:'김대리',dept:'영업1팀',meta:'010-****-3842 · eSIM · 소요 2분 41초',st:'개통 완료',cls:'ok',item:''},
+ {who:'박사원',dept:'신규입사',meta:'QR 전송됨 · 스캔 대기',st:'발급 중',cls:'wait',item:'warn'},
+ {who:'이과장',dept:'현장기술팀',meta:'010-****-7291 · 요금제 WORK 플러스',st:'변경 완료',cls:'ok',item:''},
+ {who:'최전임',dept:'퇴사처리',meta:'010-****-5518 · 고객 접점 보존',st:'회수 완료',cls:'off',item:'done'},
+ {who:'정사원',dept:'물류팀',meta:'USIM 배송 병행 · 미지원 단말',st:'발급 중',cls:'proc',item:'info'},
+ {who:'한대리',dept:'경영지원',meta:'010-****-2210 · 부서 태그 부여',st:'배정 완료',cls:'ok',item:''},
+ {who:'신규 입사자',dept:'영업2팀',meta:'최전임 회선 재배정 · 번호 유지',st:'재배정',cls:'proc',item:'info'},
+ {who:'오과장',dept:'지점A',meta:'비정상 사용 패턴 없음 · 6월',st:'정상',cls:'ok',item:''}
+];
+let ei=0;const feedList=document.getElementById('feedList');
+function pushEvent(){
+ const e=EVENTS[ei%EVENTS.length];ei++;
+ const el=document.createElement('div');
+ el.className='fitem '+(e.item||'');
+ el.innerHTML='<div class="top"><span class="who">'+e.who+'<small>'+e.dept+'</small></span><span class="st '+e.cls+'">'+e.st+'</span></div><div class="meta">'+e.meta+'</div>';
+ feedList.prepend(el);
+ while(feedList.children.length>5)feedList.removeChild(feedList.lastChild);
+}
+for(let i=0;i<4;i++)pushEvent();
+setInterval(pushEvent,2600);
+
+/* ---------- counters ---------- */
+const counted=new Set();
+function runCounter(el){
+ const target=+el.dataset.count;const small=el.querySelector('small');const suf=small?small.outerHTML:'';
+ const dur=900;const t0=performance.now();
+ function step(t){const p=Math.min((t-t0)/dur,1);const ease=1-Math.pow(1-p,3);
+  el.innerHTML=Math.round(target*ease)+suf;if(p<1)requestAnimationFrame(step);}
+ requestAnimationFrame(step);
+}
+const cio=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&!counted.has(e.target)){counted.add(e.target);runCounter(e.target);}});},{threshold:.5});
+document.querySelectorAll('.num[data-count]').forEach(n=>cio.observe(n));
+
+/* ---------- reveal ---------- */
+const rio=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:.12});
+document.querySelectorAll('.rv').forEach(n=>rio.observe(n));
+
+/* ---------- lifecycle pipeline ---------- */
+const STEPS=[
+ {tag:'STEP 01 — REQUEST',h:'관리자 포털에서 고르기만 하세요',p:'부서·인원·요금제만 선택하면 신청이 완료됩니다. 통신사 방문도, 서류 팩스도 필요 없습니다.',chips:['회선 수 · 요금제 즉시 선택','부서 · 프로젝트 태그 자동 부여','30초 신청 완료'],stats:[['30초','신청서 작성부터 접수까지'],['0장','제출할 서류']],log:'$ wm request --dept 영업1팀 --plan work-plus --qty 5  →  <b>접수 완료</b> · 처리 시작'},
+ {tag:'STEP 02 — PROVISION',h:'QR 한 번으로 eSIM 원격 발급',p:'물리적 USIM 배송 없이 QR코드 또는 푸시 알림으로 즉시 발급합니다. 미지원 단말에는 실물 USIM 배송을 병행합니다.',chips:['QR · 푸시 알림 즉시 전송','미지원 단말 USIM 배송 병행','평균 3분 개통 완료'],stats:[['3분','요청부터 개통 완료까지'],['0건','USIM 배송 대기']],log:'$ wm provision --sim esim --to 김대리  →  QR 발송 · <b>2분 41초 만에 개통</b>'},
+ {tag:'STEP 03 — ASSIGN',h:'직원 · 부서 자동 매핑, 100% 가시성',p:'HR 시스템 연동 또는 수동 배정으로 회선-직원-부서 매핑이 자동 완성됩니다. 누가 어떤 번호를 쓰는지 항상 파악됩니다.',chips:['HR 연동 자동 매핑','부서 · 직책 태그 관리','미배정 회선 실시간 감지'],stats:[['100%','회선-직원 매핑 커버리지'],['실시간','미배정 회선 감지']],log:'$ wm assign --auto  →  40개 회선 매핑 · <b>미배정 2건 알림 발송</b>'},
+ {tag:'STEP 04 — BILLING',h:'기업 통합 청구서 한 장, 부서별 배분',p:'전 회선 요금이 기업 명의 청구서 한 장으로 발행됩니다. 부서별·프로젝트별 배분 리포트와 인당 보조금 정산 데이터까지 제공됩니다.',chips:['기업 명의 통합 청구서 1장','부서 · 프로젝트별 비용 배분','보조금 정산 데이터 다운로드'],stats:[['1장','전 회선 통합 청구서'],['-80%','정산 업무 시간']],log:'$ wm invoice --month 2026-06  →  청구서 1장 발행 · <b>4개 부서 자동 배분</b>'},
+ {tag:'STEP 05 — RECLAIM',h:'퇴사 처리와 동시에 회선 회수',p:'HR 연동 또는 원클릭으로 퇴사 처리와 동시에 회선이 정지·회수됩니다. 번호와 고객 접점은 회사에 남아 신규 입사자에게 재배정됩니다.',chips:['원클릭 회선 정지 · 회수','번호 소유권 회사 유지','신규 입사자 즉시 재배정'],stats:[['0건','퇴사자 번호 유출'],['100%','고객 접점 보존']],log:'$ wm reclaim --user 최전임  →  회선 정지 · <b>번호 보존 · 재배정 대기</b>'}
+];
+const pdetail=document.getElementById('pdetail');
+function renderStep(i){
+ const s=STEPS[i];
+ pdetail.innerHTML=
+  '<div><div class="step-tag">'+s.tag+'</div><h3>'+s.h+'</h3><p>'+s.p+'</p><div class="pchips">'+s.chips.map(c=>'<span>'+c+'</span>').join('')+'</div></div>'+
+  '<div class="pstats">'+s.stats.map(x=>'<div class="pstat"><div class="v">'+x[0]+'</div><div class="k">'+x[1]+'</div></div>').join('')+'</div>'+
+  '<div class="plog">'+s.log+'</div>';
+ pdetail.style.animation='none';void pdetail.offsetWidth;pdetail.style.animation='';
+}
+renderStep(1);
+document.querySelectorAll('.pnode').forEach(n=>{
+ n.addEventListener('click',()=>{
+  document.querySelectorAll('.pnode').forEach(x=>x.classList.remove('active'));
+  n.classList.add('active');renderStep(+n.dataset.step);
+ });
+});
+
+/* ---------- pricing ---------- */
+const PLANS=[
+ {n:'WORK 세이브',d:'가성비',cat:'lite',badge:'저가형',data:'500MB',voice:'50분',price:5900},
+ {n:'WORK 라이트',d:'영업 추천',cat:'data',badge:'데이터 중심',data:'1.5GB',voice:'100분',price:8900},
+ {n:'WORK 베이직',d:'표준',cat:'data',badge:'데이터 중심',data:'3GB',voice:'200분',price:12900},
+ {n:'WORK 통화',d:'상담직',cat:'voice',badge:'통화 중심',alt:1,data:'2GB',voice:'무제한',price:15900},
+ {n:'WORK 플러스',d:'현장 추천',cat:'data',badge:'데이터 중심',data:'7GB',voice:'300분',price:18900},
+ {n:'WORK 현장',d:'현장직',cat:'voice',badge:'통화 중심',alt:1,data:'5GB',voice:'무제한',price:20900},
+ {n:'WORK 프로',d:'헤비유저',cat:'unlim',badge:'무제한',data:'15GB+3Mbps',voice:'무제한',price:25900},
+ {n:'WORK 데이터∞',d:'풀스펙',cat:'unlim',badge:'무제한',data:'무제한',voice:'무제한',price:33000}
+];
+const grid=document.getElementById('planGrid');const sel=new Set();
+function fmt(n){return n.toLocaleString('ko-KR');}
+function renderPlans(f){
+ grid.innerHTML=PLANS.map((p,i)=>{
+  const hide=f!=='all'&&p.cat!==f;
+  return '<div class="plan'+(sel.has(i)?' sel':'')+'" data-i="'+i+'" style="'+(hide?'display:none':'')+'">'+
+   '<span class="tag">선택됨</span><span class="check">✓</span>'+
+   '<span class="badge'+(p.alt?' alt':'')+'">'+p.badge+'</span>'+
+   '<h3>'+p.n+'</h3><div class="desc">'+p.d+'</div>'+
+   '<div class="spec"><div><div class="v">'+p.data+'</div><div class="k">데이터</div></div><div><div class="v">'+p.voice+'</div><div class="k">음성</div></div></div>'+
+   '<div class="price"><span class="won">'+fmt(p.price)+'</span><span class="per">원/월·회선</span></div></div>';
+ }).join('');
+}
+renderPlans('all');
+grid.addEventListener('click',e=>{
+ const card=e.target.closest('.plan');if(!card)return;
+ const i=+card.dataset.i;
+ if(sel.has(i))sel.delete(i);else sel.add(i);
+ card.classList.toggle('sel');updateSel();
+});
+function updateSel(){
+ let total=0;sel.forEach(i=>total+=PLANS[i].price);
+ document.getElementById('selCnt').textContent=sel.size;
+ document.getElementById('selTotal').textContent=fmt(total);
+ document.getElementById('selbar').classList.toggle('show',sel.size>0);
+}
+document.getElementById('filters').addEventListener('click',e=>{
+ const c=e.target.closest('.fchip');if(!c)return;
+ document.querySelectorAll('#filters .fchip').forEach(x=>x.classList.remove('active'));
+ c.classList.add('active');renderPlans(c.dataset.f);
+});
+
+/* ---------- faq ---------- */
+const FAQS=[
+ {c:'bill',cat:'요금',q:'회선당 월 요금은 얼마인가요?',a:'요금제는 회선당 <b>월 5,900원~33,000원</b>까지 데이터·음성 구성에 따라 선택 가능합니다. 30회선 이상 도입 시 볼륨 할인이 적용되며, 파일럿 기간에는 관리 수수료가 면제됩니다.'},
+ {c:'deal',cat:'도입',q:'기존 통신사 기업 요금제와 뭐가 다른가요?',a:'통신사 기업 요금제는 <b>회선을 싸게 사는 것</b>까지입니다. 발급·배정·정산·회수 운영은 여전히 사람 손으로 해야 합니다. WORK MOBILE은 회선 전 생애주기를 <b>소프트웨어로 운영하는 인프라</b>입니다.'},
+ {c:'dev',cat:'개통',q:'직원 휴대폰이 eSIM을 지원해야 하나요?',a:'2019년 이후 출시된 대부분 스마트폰(아이폰 XS 이후, 갤럭시 S20 이후 등)은 eSIM을 지원합니다. 미지원 단말에는 <b>실물 USIM 배송 옵션</b>을 병행합니다.'},
+ {c:'dev',cat:'개통',q:'기존 번호를 그대로 쓸 수 있나요?',a:'가능합니다. <b>번호이동</b>으로 기존 번호를 법인 관리 회선으로 전환할 수 있습니다. 개인명의 번호를 회사 자산으로 이전하는 절차도 온보딩 시 함께 진행합니다.'},
+ {c:'bill',cat:'요금',q:'청구와 비용 정산은 어떻게 되나요?',a:'전 회선이 <b>기업 명의 통합 청구서 한 장</b>으로 발행됩니다. 부서별·프로젝트별 비용 배분 리포트와 인당 보조금 정산 데이터도 내려받을 수 있습니다.'},
+ {c:'sec',cat:'보안',q:'직원이 퇴사하면 번호는 어떻게 되나요?',a:'HR 연동 또는 관리자 원클릭으로 <b>퇴사 처리와 동시에 회선이 정지·회수</b>됩니다. 번호 소유권은 회사에 있으므로 고객 접점이 소실되지 않습니다.'},
+ {c:'sec',cat:'보안',q:'업무용 회선을 사적으로 쓰는 걸 막을 수 있나요?',a:'회선별 사용량 대시보드와 <b>비정상 사용 패턴 알림</b>을 제공합니다. 인당 보조금 정책과 연동한 정산 데이터로 사적 사용 여부를 관리할 수 있습니다.'},
+ {c:'deal',cat:'도입',q:'파일럿 조건은 어떻게 되나요?',a:'초기 <b>5개사 한정</b>으로 진행하며, 10~200회선 조직을 우선합니다. 파일럿 기간 관리 수수료 면제와 전용 온보딩을 제공합니다. 확정 전까지 무료 취소가 가능합니다.'}
+];
+const faqList=document.getElementById('faqList');
+function renderFaq(f){
+ faqList.innerHTML=FAQS.map((x,i)=>{
+  const hide=f!=='all'&&x.c!==f;
+  return '<div class="qa" data-i="'+i+'" style="'+(hide?'display:none':'')+'"><button class="q"><span style="display:flex;align-items:center;gap:12px;flex:1"><span class="cat">'+x.cat+'</span>'+x.q+'</span><span class="plus">+</span></button><div class="a"><p>'+x.a+'</p></div></div>';
+ }).join('');
+}
+renderFaq('all');
+faqList.addEventListener('click',e=>{
+ const qa=e.target.closest('.qa');if(!qa)return;
+ const a=qa.querySelector('.a');const open=qa.classList.contains('open');
+ document.querySelectorAll('.qa.open').forEach(x=>{x.classList.remove('open');x.querySelector('.a').style.maxHeight=null;});
+ if(!open){qa.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}
+});
+document.getElementById('faqTabs').addEventListener('click',e=>{
+ const c=e.target.closest('.fchip');if(!c)return;
+ document.querySelectorAll('#faqTabs .fchip').forEach(x=>x.classList.remove('active'));
+ c.classList.add('active');renderFaq(c.dataset.f);
+});
+</script>
+</body>
+</html>
